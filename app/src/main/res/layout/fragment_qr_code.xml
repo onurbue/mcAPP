@@ -1,0 +1,92 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/fa_a_scan_d"
+        android:layout_width="232dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="65dp"
+        android:gravity="center"
+        android:text="@string/scan_obra"
+        android:textAppearance="@style/scan_obra"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/cardView2" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/setaBackk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/seta_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027">
+
+    </androidx.appcompat.widget.AppCompatImageView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="251dp"
+        android:layout_height="251dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421">
+
+        <com.journeyapps.barcodescanner.BarcodeView
+            android:id="@+id/barcode_scanner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/qr_code_image" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textqrcode"
+        android:layout_width="251dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/scan_obra2"
+        android:textAppearance="@style/scan_obra_2"
+        android:textColor="#000000"
+        android:textSize="16sp"
+
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:lineHeight="36sp" />
+
+    <Button
+        android:id="@+id/selecionar"
+        android:layout_width="125.5dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangle_text_bold"
+        android:text="@string/scan_obra3"
+        android:textAlignment="center"
+        android:textAppearance="@style/scan_obra_3"
+        android:textColor="#0A0A0E"
+        app:layout_constraintEnd_toEndOf="@+id/textqrcode"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="@+id/textqrcode"
+        app:layout_constraintTop_toBottomOf="@+id/textqrcode"
+        app:lineHeight="18sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

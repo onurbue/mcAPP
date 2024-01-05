@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Projetocma" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.Projetocma" parent="Base.Theme.Projetocma" />
+
+    <style name="Theme.AppCompat.bgImage">
+        <item name="android:windowBackground">@drawable/homepage</item>
+    </style>
+
+    <style name="Theme.AppCompat.text">
+
+    </style>
+
+</resources>

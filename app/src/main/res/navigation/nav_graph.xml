@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/museusExplore"
+    android:id="@+id/nav_graph">
+
+
+    <fragment
+        android:id="@+id/qrCode"
+        android:name="com.example.projetocma.QrCode"
+        android:label="fragment_qr_code"
+        tools:layout="@layout/fragment_qr_code" />
+
+    <fragment
+        android:id="@+id/accountPassword"
+        android:name="account.AccountFragmentPassword"
+        android:label="fragment_account_password"
+        tools:layout="@layout/fragment_account_password" />
+    <fragment
+        android:id="@+id/accountTickets"
+        android:name="account.AccountFragmentTickets"
+        android:label="fragment_account_tickets"
+        tools:layout="@layout/fragment_account_tickets" >
+        <action
+            android:id="@+id/action_accountTickets_to_ticketInfo"
+            app:destination="@id/ticketInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/museusExplore"
+        android:name="com.example.projetocma.MuseusExplore"
+        android:label="fragment_museus_explore"
+
+        tools:layout="@layout/fragment_museus_explore" >
+        <action
+            android:id="@+id/action_museusExplore_to_museuDetail"
+            app:destination="@id/museuDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/museuDetail"
+        android:name="com.example.projetocma.MuseuDetail"
+        android:label="fragment_museu_detail"
+        tools:layout="@layout/fragment_museu_detail">
+        <action
+            android:id="@+id/action_museuDetail_to_eventFragment"
+            app:destination="@id/eventFragment" />
+        <action
+            android:id="@+id/action_museuDetail_to_fragmentTickets"
+            app:destination="@id/fragmentTickets" />
+        <action
+            android:id="@+id/action_museuDetail_to_historiaMuseu"
+            app:destination="@id/historiaMuseu" />
+        <action
+            android:id="@+id/action_museuDetail_to_obrasExplore"
+            app:destination="@id/obrasExplore" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_accountPassword"
+            app:destination="@id/accountPassword" />
+        <action
+            android:id="@+id/action_accountFragment_to_accountTickets"
+            app:destination="@id/accountTickets" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.projetocma.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventDetail2"
+            app:destination="@id/eventDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendario"
+        android:name="com.example.projetocma.Calendario"
+        android:label="fragment_calendario"
+        tools:layout="@layout/fragment_calendario" >
+        <action
+            android:id="@+id/action_calendario_to_ticketBasicc"
+            app:destination="@id/ticketBasicc" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventDetail"
+        android:name="com.example.projetocma.EventDetail"
+        android:label="fragment_event_detail"
+        tools:layout="@layout/fragment_event_detail" >
+        <action
+            android:id="@+id/action_eventDetail_to_eventBottomSheet"
+            app:destination="@id/eventBottomSheet" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventBottomSheet"
+        android:name="com.example.projetocma.EventBottomSheet"
+        android:label="fragment_event_bottom_sheet"
+        tools:layout="@layout/fragment_event_bottom_sheet" />
+
+
+
+    <fragment
+        android:id="@+id/fragmentTickets"
+        android:name="tickets.TicketsFragment"
+        android:label="fragment_tickets"
+        tools:layout="@layout/fragment_tickets" >
+        <action
+            android:id="@+id/action_fragmentTickets_to_calendario"
+            app:destination="@id/calendario" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketBasicc"
+        android:name="tickets.TicketBasic"
+        android:label="fragment_ticket_basicc"
+        tools:layout="@layout/fragment_ticket_basicc" >
+        <action
+            android:id="@+id/action_ticketBasicc_to_museusExplore"
+            app:destination="@id/museusExplore" />
+    </fragment>
+    <fragment
+        android:id="@+id/historiaMuseu"
+        android:name="com.example.projetocma.HistoriaMuseu"
+        android:label="fragment_historia_museu"
+        tools:layout="@layout/fragment_historia_museu" >
+        <action
+            android:id="@+id/action_historiaMuseu_to_historiaBottomSheet"
+            app:destination="@id/historiaBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/historiaBottomSheet"
+        android:name="com.example.projetocma.historiaBottomSheet"
+        android:label="fragment_historia_bottom_sheet"
+        tools:layout="@layout/fragment_historia_bottom_sheet" />
+    <fragment
+        android:id="@+id/obrasExplore"
+        android:name="com.example.projetocma.ObrasExplore"
+        android:label="fragment_obras_explore"
+        tools:layout="@layout/fragment_obras_explore" >
+        <action
+            android:id="@+id/action_obrasExplore_to_obrasDetail"
+            app:destination="@id/obrasDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/obrasDetail"
+        android:name="com.example.projetocma.ObrasDetail"
+        android:label="fragment_obras_detail"
+        tools:layout="@layout/fragment_obras_detail" >
+        <action
+            android:id="@+id/action_obrasDetail_to_obrasBottomSheet"
+            app:destination="@id/obrasBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/obrasBottomSheet"
+        android:name="com.example.projetocma.ObrasBottomSheet"
+        android:label="fragment_obras_bottom_sheet"
+        tools:layout="@layout/fragment_obras_bottom_sheet" />
+    <fragment
+        android:id="@+id/ticketInfo"
+        android:name="com.example.projetocma.TicketInfo"
+        android:label="fragment_ticket_info"
+        tools:layout="@layout/fragment_ticket_info" />
+
+</navigation>

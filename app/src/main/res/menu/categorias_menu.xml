@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_category_art"
+        android:title="Arte" />
+    <item
+        android:id="@+id/menu_category_history"
+        android:title="Cultura" />
+    <!-- Add more items for additional categories -->
+</menu>

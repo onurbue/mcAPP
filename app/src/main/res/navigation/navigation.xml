@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/museusPageFrag"
+        android:name="com.example.projetocma.MuseusPageFrag"
+        android:label="fragment_museus_page"
+        tools:layout="@layout/fragment_museus_page" >
+        <action
+            android:id="@+id/action_museusPageFrag_to_qrCode"
+            app:destination="@id/qrCode" />
+    </fragment>
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="login.RegisterFragment"
+        android:label="fragment_register_fragment"
+        tools:layout="@layout/fragment_register_fragment" >
+        <action
+            android:id="@+id/action_register_fragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_museusPageFrag"
+            app:destination="@id/museusPageFrag" />
+        <action
+            android:id="@+id/action_loginFragment_to_register_fragment"
+            app:destination="@id/register_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/qrCode"
+        android:name="com.example.projetocma.QrCode"
+        android:label="fragment_qr_code"
+        tools:layout="@layout/fragment_qr_code" />
+
+
+</navigation>

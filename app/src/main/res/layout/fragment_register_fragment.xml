@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
+
+    <!-- User -->
+
+
+    <RelativeLayout
+        android:id="@+id/user_icone"
+        android:layout_width="20dp"
+        android:layout_height="19dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/user_icone"
+        app:layout_constraintBottom_toBottomOf="@+id/login_accou"
+        app:layout_constraintStart_toEndOf="@+id/login_accou"
+        app:layout_constraintTop_toTopOf="@+id/login_accou"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/login_accou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="55dp"
+        android:gravity="top"
+        android:text="@string/register_accou"
+        android:textAppearance="@style/login_accou"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hello_welco"
+        android:layout_width="244dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:gravity="top"
+        android:text="@string/hello_welco"
+        android:textAppearance="@style/hello_welco"
+        app:layout_constraintStart_toStartOf="@+id/login_accou"
+        app:layout_constraintTop_toBottomOf="@+id/login_accou" />
+
+    <EditText
+        android:id="@+id/EditTextRegisterUser"
+        android:layout_width="339dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rectangle_text"
+        android:elevation="2dp"
+        android:hint="Username"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_welco" />
+
+    <EditText
+        android:id="@+id/EditTextEmail"
+        android:layout_width="339dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangle_text"
+        android:elevation="2dp"
+        android:hint="Email"
+        android:inputType="none"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextRegisterUser" />
+
+    <!-- button 28 -->
+
+    <EditText
+        android:id="@+id/editTextRegisterPassword"
+        android:layout_width="339dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangle_text"
+        android:elevation="2dp"
+        android:hint="Password"
+        android:inputType="none"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextEmail" />
+
+    <EditText
+        android:id="@+id/editTextRegisterTelefone"
+        android:layout_width="339dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangle_text"
+        android:elevation="2dp"
+        android:hint="Phone"
+        android:inputType="none"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegisterPassword" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="339dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rectangle_button"
+        android:backgroundTint="#605E79"
+        android:text="Register"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegisterTelefone" />
+
+    <TextView
+        android:id="@+id/or_sign_up_"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/or_sign_up_with"
+        android:textAppearance="@style/or_sign_"
+        app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
+        app:layout_constraintStart_toStartOf="@+id/buttonRegister"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="105dp"
+        android:layout_height="0.7dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/or_sign_up_"
+        app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
+        app:layout_constraintTop_toTopOf="@+id/or_sign_up_"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="105dp"
+        android:layout_height="0.7dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/or_sign_up_"
+        app:layout_constraintStart_toStartOf="@+id/buttonRegister"
+        app:layout_constraintTop_toTopOf="@+id/or_sign_up_"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <TextView
+        android:id="@+id/google"
+        android:layout_width="51dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="112dp"
+        android:text="@string/google"
+        android:textAppearance="@style/google"
+        app:layout_constraintBottom_toBottomOf="@+id/google_logo"
+        app:layout_constraintEnd_toEndOf="@+id/line"
+        app:layout_constraintTop_toTopOf="@+id/google_logo"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/google_logo"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/google_logo"
+        app:layout_constraintStart_toStartOf="@+id/line2"
+        app:layout_constraintTop_toBottomOf="@+id/or_sign_up_" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

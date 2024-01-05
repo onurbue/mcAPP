@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "575377800302",
+    "project_id": "projetocma-9e542",
+    "storage_bucket": "projetocma-9e542.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575377800302:android:72f9ea4d953f87e1743a7f",
+        "android_client_info": {
+          "package_name": "com.example.projetocma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu0YQvStblwBrCWqPYGbT8N9dshGlqYzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
