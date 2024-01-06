@@ -6,7 +6,7 @@
     android:layout_height="600dp"
     android:orientation="vertical"
     android:background="@drawable/bottom_sheet_round"
-    tools:context=".EventBottomSheet">
+    tools:context=".eventos.EventBottomSheet">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:src="@drawable/imageplaceholder"

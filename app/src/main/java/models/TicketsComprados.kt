@@ -2,12 +2,12 @@ package models
 
 class TicketsComprados (
     var id: String,
-    var userId : String,
-    var date : String,
-    var name: String,
+    var userId : String?,
+    var date : String?,
+    var name: String?,
     var pathToImg: String?,
-    var price: String,
-    var description: String,
+    var price: String?,
+    var description: String?,
 ){
     fun toHashMap(): Map<String, Any?> {
         return hashMapOf(

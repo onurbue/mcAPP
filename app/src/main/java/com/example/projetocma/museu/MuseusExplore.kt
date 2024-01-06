@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.museu
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.GridView
-import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseusExploreBinding
 import com.example.projetocma.databinding.GridItemBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView

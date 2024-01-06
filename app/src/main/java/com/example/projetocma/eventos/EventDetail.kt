@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.eventos
 
 import android.app.Dialog
 import android.graphics.Bitmap
@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,10 +15,9 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
-import com.example.projetocma.databinding.FragmentEventBinding
+import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentEventDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class EventDetail : Fragment() {

@@ -1,4 +1,4 @@
-package account
+package com.example.projetocma.account
 
 import android.os.Bundle
 import android.view.LayoutInflater

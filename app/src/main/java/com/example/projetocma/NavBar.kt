@@ -1,15 +1,14 @@
 package com.example.projetocma
 
-import account.AccountFragment
+import com.example.projetocma.account.AccountFragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.projetocma.databinding.ActivityNavBarBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.projetocma.museu.MuseusExplore
 
 class NavBar : AppCompatActivity() {
     private lateinit var binding: ActivityNavBarBinding

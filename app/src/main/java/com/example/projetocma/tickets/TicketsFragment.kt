@@ -1,6 +1,5 @@
-package tickets
+package com.example.projetocma.tickets
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -9,19 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentTicketsBinding
-import com.example.projetocma.databinding.GridItemBinding
 import com.example.projetocma.databinding.TicketGridItemBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
-import models.Museu
 import models.Tickets
 import java.io.ByteArrayOutputStream
 
@@ -131,12 +125,13 @@ class TicketsFragment : Fragment() {
 
                     val bundle = Bundle().apply {
                         putString("name", selectedTicket.name)
+                        putString("pathToImage", selectedTicket.pathToImg)
                         putByteArray("image", imageByteArray)
                         putString("description", selectedTicket.description)
                         putString("ticketID", tickets[position].id)
                         putString("price", tickets[position].price)
                     }
-                    findNavController().navigate(R.id.ticketBasicc, bundle)
+                    findNavController().navigate(R.id.calendario, bundle)
                 }
             }
 

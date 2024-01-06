@@ -1,9 +1,7 @@
-package com.example.projetocma
+package com.example.projetocma.eventos
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.metrics.Event
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,21 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentEventBinding
 import com.example.projetocma.databinding.GridEventItemBinding
-import com.example.projetocma.databinding.GridItemBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.play.core.assetpacks.n
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
 import models.Eventos
-import models.Museu
 import java.io.ByteArrayOutputStream
 
 

@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.museu
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseuDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.storage.ktx.storage
 
 class MuseuDetail : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.eventos
 
 import android.os.Bundle
 import android.util.Log

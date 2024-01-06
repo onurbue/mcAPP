@@ -1,4 +1,4 @@
-package login
+package com.example.projetocma.login
 
 import android.app.Activity
 import android.content.ContentValues.TAG

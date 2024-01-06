@@ -1,4 +1,4 @@
-package account
+package com.example.projetocma.account
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,7 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentAccountTicketsBinding
 import com.example.projetocma.databinding.TicketGridItemBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
+import com.google.rpc.context.AttributeContext.Auth
+import models.Museu
 import models.TicketsComprados
 import java.io.ByteArrayOutputStream
 
@@ -22,12 +27,36 @@ class AccountFragmentTickets : Fragment() {
     private lateinit var binding: FragmentAccountTicketsBinding
     var ticketsComprados = arrayListOf<TicketsComprados>()
     private val imageCache = mutableMapOf<String, Bitmap?>()
+    private var adapter = TicketsCompradosAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAccountTicketsBinding.inflate(inflater, container, false)
+
+        binding.listViewBilhetes.adapter = adapter
+        val userId = Firebase.auth.currentUser
+
+        val db = Firebase.firestore
+
+        db.collection("bilhetesUser").whereEqualTo("userId", userId?.uid )
+            .addSnapshotListener { snapshoot, error ->
+                snapshoot?.documents?.let {
+                    this.ticketsComprados.clear()
+                    for (document in it) {
+                        document.data?.let { data ->
+                            this.ticketsComprados.add(
+                                TicketsComprados.fromSnapshot(
+                                    document.id,
+                                    data
+                                )
+                            )
+                        }
+                    }
+                    this.adapter.notifyDataSetChanged()
+                }
+            }
 
 
 
@@ -97,11 +126,16 @@ class AccountFragmentTickets : Fragment() {
                         putString("name", selectedTicket.name)
                         putByteArray("image", imageByteArray)
                         putString("description", selectedTicket.description)
-                        putString("ticketID", ticketsComprados[position].id)
+                        putString("ticketId", ticketsComprados[position].id)
                         putString("price", ticketsComprados[position].price)
+                        putString("date", ticketsComprados[position].date)
                     }
                     findNavController().navigate(R.id.ticketInfo, bundle)
                 }
+            }
+
+            binding.backIconeTickets.setOnClickListener {
+                findNavController().popBackStack()
             }
 
 

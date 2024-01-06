@@ -1,4 +1,4 @@
-package account
+package com.example.projetocma.obras
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.projetocma.R
 
-class AccountFragmentContact : Fragment() {
+class ObrasBottomSheet : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,7 @@ class AccountFragmentContact : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_contact, container, false)
+        return inflater.inflate(R.layout.fragment_obras_bottom_sheet, container, false)
     }
 
 }

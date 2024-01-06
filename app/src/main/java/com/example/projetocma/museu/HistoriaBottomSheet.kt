@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.museu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

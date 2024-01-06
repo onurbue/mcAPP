@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.tickets
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentCalendarioBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
@@ -44,15 +45,17 @@ class Calendario : Fragment() {
 
         binding.buttonNextEvent.setOnClickListener {
             val name = arguments?.getString("name")
-            val imageResId = arguments?.getInt("image")
+            val imageResId = arguments?.getByteArray("image")
             val description = arguments?.getString("description")
             val price = arguments?.getString("price")
+            val pathToImage = arguments?.getString("pathToImage")
             val bundle = Bundle()
             bundle.putSerializable("selectedDate", selectedDate)
             bundle.putString("name", name)
-            bundle.putInt("image", imageResId?:0)
+            bundle.putByteArray("image", imageResId)
             bundle.putString("description", description)
             bundle.putString("price", price)
+            bundle.putString("pathToImage", pathToImage)
 
 
 

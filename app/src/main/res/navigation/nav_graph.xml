@@ -14,12 +14,12 @@
 
     <fragment
         android:id="@+id/accountPassword"
-        android:name="account.AccountFragmentPassword"
+        android:name="com.example.projetocma.account.AccountFragmentPassword"
         android:label="fragment_account_password"
         tools:layout="@layout/fragment_account_password" />
     <fragment
         android:id="@+id/accountTickets"
-        android:name="account.AccountFragmentTickets"
+        android:name="com.example.projetocma.account.AccountFragmentTickets"
         android:label="fragment_account_tickets"
         tools:layout="@layout/fragment_account_tickets" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/museusExplore"
-        android:name="com.example.projetocma.MuseusExplore"
+        android:name="com.example.projetocma.museu.MuseusExplore"
         android:label="fragment_museus_explore"
 
         tools:layout="@layout/fragment_museus_explore" >
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/museuDetail"
-        android:name="com.example.projetocma.MuseuDetail"
+        android:name="com.example.projetocma.museu.MuseuDetail"
         android:label="fragment_museu_detail"
         tools:layout="@layout/fragment_museu_detail">
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
-        android:name="account.AccountFragment"
+        android:name="com.example.projetocma.account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.example.projetocma.EventFragment"
+        android:name="com.example.projetocma.eventos.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/calendario"
-        android:name="com.example.projetocma.Calendario"
+        android:name="com.example.projetocma.tickets.Calendario"
         android:label="fragment_calendario"
         tools:layout="@layout/fragment_calendario" >
         <action
@@ -87,7 +87,7 @@
 
     <fragment
         android:id="@+id/eventDetail"
-        android:name="com.example.projetocma.EventDetail"
+        android:name="com.example.projetocma.eventos.EventDetail"
         android:label="fragment_event_detail"
         tools:layout="@layout/fragment_event_detail" >
         <action
@@ -97,7 +97,7 @@
 
     <fragment
         android:id="@+id/eventBottomSheet"
-        android:name="com.example.projetocma.EventBottomSheet"
+        android:name="com.example.projetocma.eventos.EventBottomSheet"
         android:label="fragment_event_bottom_sheet"
         tools:layout="@layout/fragment_event_bottom_sheet" />
 
@@ -105,7 +105,7 @@
 
     <fragment
         android:id="@+id/fragmentTickets"
-        android:name="tickets.TicketsFragment"
+        android:name="com.example.projetocma.tickets.TicketsFragment"
         android:label="fragment_tickets"
         tools:layout="@layout/fragment_tickets" >
         <action
@@ -114,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/ticketBasicc"
-        android:name="tickets.TicketBasic"
+        android:name="com.example.projetocma.tickets.TicketBasic"
         android:label="fragment_ticket_basicc"
         tools:layout="@layout/fragment_ticket_basicc" >
         <action
@@ -123,7 +123,7 @@
     </fragment>
     <fragment
         android:id="@+id/historiaMuseu"
-        android:name="com.example.projetocma.HistoriaMuseu"
+        android:name="com.example.projetocma.museu.HistoriaMuseu"
         android:label="fragment_historia_museu"
         tools:layout="@layout/fragment_historia_museu" >
         <action
@@ -132,12 +132,12 @@
     </fragment>
     <fragment
         android:id="@+id/historiaBottomSheet"
-        android:name="com.example.projetocma.historiaBottomSheet"
+        android:name="com.example.projetocma.museu.historiaBottomSheet"
         android:label="fragment_historia_bottom_sheet"
         tools:layout="@layout/fragment_historia_bottom_sheet" />
     <fragment
         android:id="@+id/obrasExplore"
-        android:name="com.example.projetocma.ObrasExplore"
+        android:name="com.example.projetocma.obras.ObrasExplore"
         android:label="fragment_obras_explore"
         tools:layout="@layout/fragment_obras_explore" >
         <action
@@ -146,7 +146,7 @@
     </fragment>
     <fragment
         android:id="@+id/obrasDetail"
-        android:name="com.example.projetocma.ObrasDetail"
+        android:name="com.example.projetocma.obras.ObrasDetail"
         android:label="fragment_obras_detail"
         tools:layout="@layout/fragment_obras_detail" >
         <action
@@ -155,12 +155,12 @@
     </fragment>
     <fragment
         android:id="@+id/obrasBottomSheet"
-        android:name="com.example.projetocma.ObrasBottomSheet"
+        android:name="com.example.projetocma.obras.ObrasBottomSheet"
         android:label="fragment_obras_bottom_sheet"
         tools:layout="@layout/fragment_obras_bottom_sheet" />
     <fragment
         android:id="@+id/ticketInfo"
-        android:name="com.example.projetocma.TicketInfo"
+        android:name="com.example.projetocma.account.TicketInfo"
         android:label="fragment_ticket_info"
         tools:layout="@layout/fragment_ticket_info" />
 

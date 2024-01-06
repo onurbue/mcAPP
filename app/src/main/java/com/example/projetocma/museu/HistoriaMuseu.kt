@@ -1,4 +1,4 @@
-package com.example.projetocma
+package com.example.projetocma.museu
 
 import android.app.Dialog
 import android.graphics.Bitmap
@@ -15,8 +15,8 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentHistoriaMuseuBinding
-import com.example.projetocma.databinding.FragmentMuseuDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

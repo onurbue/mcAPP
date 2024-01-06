@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/museusPageFrag"
-        android:name="com.example.projetocma.MuseusPageFrag"
+        android:name="com.example.projetocma.museu.MuseusPageFrag"
         android:label="fragment_museus_page"
         tools:layout="@layout/fragment_museus_page" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="login.LoginFragment"
+        android:name="com.example.projetocma.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
