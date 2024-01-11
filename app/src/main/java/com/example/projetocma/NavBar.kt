@@ -13,6 +13,7 @@ import com.example.projetocma.museu.MuseusExplore
 class NavBar : AppCompatActivity() {
     private lateinit var binding: ActivityNavBarBinding
     private lateinit var navController: NavController
+       private lateinit var navConstroller: NavController
 
     val homeFragment = MuseusExplore()
     val qrCodeFragment = QrCode()
