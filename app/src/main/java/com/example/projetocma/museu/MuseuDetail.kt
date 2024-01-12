@@ -95,7 +95,7 @@ class MuseuDetail : Fragment() {
             bundle.putString("museuId", museuId)
             findNavController().navigate(R.id.eventFragment, bundle)
         }
-
+        //asaadsadsadsad
         binding.setaBack.setOnClickListener {
             findNavController().popBackStack()
         }
