@@ -36,25 +36,33 @@ class LoginFragment : Fragment() {
         binding.ButtonLogin.setOnClickListener {
             val email = binding.EditTextEmail.text.toString()
             val password = binding.EditTextPassword.text.toString()
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "signInWithEmail:success")
+                            val user = auth.currentUser
+                            findNavController().navigate(R.id.museusPageFrag)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                context,
+                                "Authentication Failed",
+                                Toast.LENGTH_SHORT,
+                            ).show()
 
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "signInWithEmail:success")
-                        val user = auth.currentUser
-                        findNavController().navigate(R.id.museusPageFrag)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            context,
-                            "Authentication Failed",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-
+                        }
                     }
-                }
+            }else{
+                Toast.makeText(
+                    context,
+                    "Credentials missing",
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
         }
+
 
         return binding.root
     }

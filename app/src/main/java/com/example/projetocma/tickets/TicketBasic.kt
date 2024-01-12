@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
@@ -36,6 +37,7 @@ class TicketBasic : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var quantity = 1
         binding = FragmentTicketBasiccBinding.inflate(inflater, container, false)
 
         val name = arguments?.getString("name")
@@ -45,9 +47,28 @@ class TicketBasic : Fragment() {
         val pathToImage = arguments?.getString("pathToImage")
         val selectedDate: Date? = arguments?.getSerializable("selectedDate") as? Date
 
-        binding.ticketPrice.text = price
+        val initialPrice = price!!.toInt()
+
+        binding.ticketPrice.text = price + "€"
         binding.ticketName.text = name
         binding.description.text = description
+        binding.quantidade.text = quantity.toString()
+
+        binding.addVector.setOnClickListener {
+            quantity++
+            binding.quantidade.text = quantity.toString()
+            val updatedPrice = initialPrice * quantity
+            binding.ticketNamesPrice.text = updatedPrice.toString() + "€"
+        }
+
+        binding.minusVector.setOnClickListener {
+            if (quantity > 1){
+                quantity--
+            }
+            binding.quantidade.text = quantity.toString()
+            val updatedPrice = initialPrice * quantity
+            binding.ticketNamesPrice.text = updatedPrice.toString() + "€"
+        }
 
         if (image != null) {
             val bitmap = BitmapFactory.decodeByteArray(image, 0, image.size)
@@ -59,42 +80,47 @@ class TicketBasic : Fragment() {
 
             val formattedDate = SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(selectedDate)
             binding.data.text = formattedDate
+            binding.ticketNamesPrice.text = price
 
-        binding.ticketNamesPrice.text = price
+        binding.metodopagamento.setOnClickListener {
+            showCategoryMenu(binding.metodopagamento)
+        }
 
-        val ticket = TicketsComprados(
-            id = randomUid,
-            date = formattedDate,
-            userId = userId,
-            name = name,
-            pathToImg = pathToImage,
-            description = description,
-            price = price
-        )
-
-        val ticketMap = ticket.toHashMap()
 
         val db = Firebase.firestore
 
         binding.buttonNextBasic.setOnClickListener {
-            findNavController().navigate(R.id.museusExplore)
-
-            showToast("O pagamento foi bem sucedido")
-
 
             val db = FirebaseFirestore.getInstance()
+             for (i in 0 until quantity) {
 
-            db.collection("bilhetesUser")
-                .add(ticketMap)
-                .addOnSuccessListener { documentReference ->
-                    val ticketId = documentReference.id
-                }
-                .addOnFailureListener { e ->
-                }
+                 val ticket = TicketsComprados(
+                     id = randomUid,
+                     date = formattedDate,
+                     userId = userId,
+                     name = name,
+                     pathToImg = pathToImage,
+                     description = description,
+                     price = price
+                 )
+
+                 val ticketMap = ticket.toHashMap()
+
+                db.collection("bilhetesUser")
+                    .add(ticketMap)
+                    .addOnSuccessListener { documentReference ->
+                        val ticketId = documentReference.id
+                    }
+                    .addOnFailureListener { e ->
+                    }
+            }
+
+            showToast("O pagamento foi bem sucedido")
+            findNavController().navigate(R.id.museusExplore)
 
         }
 
-        binding.setaBackk.setOnClickListener {
+        binding.buttonBackBasic.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -104,6 +130,25 @@ class TicketBasic : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showCategoryMenu(anchorView: View) {
+        val popupMenu = PopupMenu(requireContext(), anchorView)
+        popupMenu.menuInflater.inflate(R.menu.metodo_pagamento, popupMenu.menu)
+
+        // Set a click listener for each menu item
+        /*popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_category_art -> filterMuseumsByCategory("Arte")
+                R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
+                R.id.menu_category_none -> fetchMuseums()
+                // Add more categories as needed
+            }
+            true
+        }*/
+
+        // Show the popup menu
+        popupMenu.show()
     }
 
 }

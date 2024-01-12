@@ -32,9 +32,9 @@ class Museu(
         fun fromSnapshot(id : String, snapshot: Map<String,Any>) : Museu{
             return Museu(id,
                 snapshot.get("name") as String,
-                snapshot.get("pathToImg") as? String?,
+                snapshot.get("pathToImg") as? String,
                 snapshot.get("description") as String,
-                snapshot["category"] as? String?
+                snapshot["categoria"] as? String
             )
         }
     }

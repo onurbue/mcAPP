@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"
+    tools:context="com.example.projetocma.QrCode"
     android:background="@color/white">
 
     <TextView
@@ -23,7 +24,9 @@
         app:layout_constraintStart_toStartOf="@+id/cardView2" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/setaBackk"
+        android:id="@+id/setaBackk2"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/seta_back"

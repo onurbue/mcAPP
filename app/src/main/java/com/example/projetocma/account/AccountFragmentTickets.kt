@@ -58,6 +58,10 @@ class AccountFragmentTickets : Fragment() {
                 }
             }
 
+        binding.backIconeTickets.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
 
 
 

@@ -87,7 +87,7 @@ class TicketsFragment : Fragment() {
                 rootView = TicketGridItemBinding.bind(convertView)
             }
             rootView.ticketName.text = tickets[position].name
-            rootView.ticketPrice.text = tickets[position].price
+            rootView.ticketPrice.text = tickets[position].price + "€"
 
             tickets[position].pathToImg?.let { imagePath ->
                 if (imageCache.containsKey(imagePath)) {

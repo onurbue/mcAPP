@@ -42,25 +42,7 @@ class MuseusExplore : Fragment() {
             showCategoryMenu(categoryCard)
         }
 
-        val db = Firebase.firestore
-
-        db.collection("museus")
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.museus.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.museus.add(
-                                Museu.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adpapter.notifyDataSetChanged()
-                }
-            }
+        fetchMuseums()
 
         val navBar =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
@@ -158,6 +140,7 @@ class MuseusExplore : Fragment() {
             when (menuItem.itemId) {
                 R.id.menu_category_art -> filterMuseumsByCategory("Arte")
                 R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
+                R.id.menu_category_none -> fetchMuseums()
                 // Add more categories as needed
             }
             true
@@ -193,6 +176,28 @@ class MuseusExplore : Fragment() {
                         }
                     }
                     callback(museums)
+                }
+            }
+    }
+
+    private fun fetchMuseums(){
+        val db = Firebase.firestore
+
+        db.collection("museus")
+            .addSnapshotListener { snapshoot, error ->
+                snapshoot?.documents?.let {
+                    this.museus.clear()
+                    for (document in it) {
+                        document.data?.let { data ->
+                            this.museus.add(
+                                Museu.fromSnapshot(
+                                    document.id,
+                                    data
+                                )
+                            )
+                        }
+                    }
+                    this.adpapter.notifyDataSetChanged()
                 }
             }
     }

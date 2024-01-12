@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,14 +14,17 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentObrasDetailBinding
+import java.util.Locale
 
 class ObrasDetail : Fragment() {
 
     private lateinit var binding: FragmentObrasDetailBinding
+    private lateinit var textToSpeech: TextToSpeech
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,6 +55,10 @@ class ObrasDetail : Fragment() {
 
         binding.setaBackk.setOnClickListener {
             findNavController().popBackStack()
+            if (::textToSpeech.isInitialized) {
+                textToSpeech.stop()
+                textToSpeech.shutdown()
+            }
         }
 
 
@@ -63,10 +71,22 @@ class ObrasDetail : Fragment() {
         dialog.setContentView(R.layout.fragment_obras_bottom_sheet)
 
 
+        val audioButton : ImageView = dialog.findViewById(R.id.audiobutton)
         val bottomSheetImageView: ImageView = dialog.findViewById(R.id.bottomSheetObrasImg)
         val bottomSheetImgDescription: TextView =  dialog.findViewById(R.id.textViewImgObrasDescription)
         val bottomSheetDescription: TextView =  dialog.findViewById(R.id.textViewObrasDescription)
         val bottomSheetName : TextView = dialog.findViewById(R.id.textViewImgObrasName)
+
+        textToSpeech = TextToSpeech(requireContext()){status ->
+            if(status == TextToSpeech.SUCCESS){
+                val result = textToSpeech.setLanguage(Locale.getDefault())
+                if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA){
+                    Toast.makeText(requireContext(),"language is not supported", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
 
         imageBitmap?.let {
             bottomSheetImageView.setImageBitmap(it)
@@ -74,6 +94,12 @@ class ObrasDetail : Fragment() {
         bottomSheetDescription.text = description
         bottomSheetImgDescription.text = imgDescription
         bottomSheetName.text = name
+
+        audioButton.setOnClickListener {
+            if (description!!.isNotEmpty()){
+                textToSpeech.speak(description,TextToSpeech.QUEUE_FLUSH,null,null)
+            }
+        }
 
         dialog.show()
         dialog.window?.setLayout(

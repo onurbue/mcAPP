@@ -39,7 +39,7 @@ class TicketInfo : Fragment() {
         }
 
         binding.ticketName.text = name
-        binding.ticketPrice.text = price
+        binding.ticketPrice.text = price + "€"
         binding.ticketdate.text = date
         binding.ticketdescription.text = description
         binding.ticketid.text = ticketId

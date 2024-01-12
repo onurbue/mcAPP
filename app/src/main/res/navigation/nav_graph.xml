@@ -13,6 +13,12 @@
         tools:layout="@layout/fragment_qr_code" />
 
     <fragment
+        android:id="@+id/perfil"
+        android:name="com.example.projetocma.account.AccountFragmentContact"
+        android:label="fragment_contact"
+        tools:layout="@layout/fragment_account_contact" />
+
+    <fragment
         android:id="@+id/accountPassword"
         android:name="com.example.projetocma.account.AccountFragmentPassword"
         android:label="fragment_account_password"
@@ -163,5 +169,6 @@
         android:name="com.example.projetocma.account.TicketInfo"
         android:label="fragment_ticket_info"
         tools:layout="@layout/fragment_ticket_info" />
+
 
 </navigation>

@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/register_fragment"
-        android:name="login.RegisterFragment"
+        android:name="RegisterFragment"
         android:label="fragment_register_fragment"
         tools:layout="@layout/fragment_register_fragment" >
         <action

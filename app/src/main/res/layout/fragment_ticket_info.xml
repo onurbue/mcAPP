@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfitregular"
         android:text="9,50€"
-        android:textSize="24dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.355"
@@ -157,30 +157,18 @@
     </TextView>
 
     <TextView
-        android:id="@+id/acesso_a_basic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfitregular"
-        android:text="Acesso a:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.163"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
-
-    <TextView
         android:id="@+id/ticketdescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:fontFamily="@font/outfitregular"
-        android:layout_marginTop="20dp"
         android:text="Museu de Arte Contemporânea"
+        android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.315"
+        app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acesso_a_basic" />
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
 
     <TextView
         android:id="@+id/descriptionMuseum"
@@ -189,6 +177,7 @@
         android:fontFamily="@font/outfitregular"
         android:text="Aproveite sua visita ao Museu de Arte Contemporânea. Por favor, apresente este ingresso na entrada."
         android:textSize="16sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

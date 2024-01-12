@@ -6,44 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".tickets.TicketBasic">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:backgroundTint="@color/black"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.516">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/quantidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/minusVector"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/minusvector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardView3"
+        app:layout_constraintHorizontal_bias="0.807"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519">
+
+    </androidx.appcompat.widget.AppCompatImageView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/addVector"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toEndOf="@+id/cardView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519">
+
+    </androidx.appcompat.widget.AppCompatImageView>
+
     <TextView
         android:id="@+id/bilheteira_basic"
-        android:fontFamily="@font/outfitsemibold"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="48dp"
+        android:fontFamily="@font/outfitsemibold"
         android:text="Bilheteira"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/setaBackk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/seta_back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027">
-
-    </androidx.appcompat.widget.AppCompatImageView>
-
     <com.google.android.material.card.MaterialCardView
-        android:clickable="true"
         android:layout_width="130dp"
         android:layout_height="25dp"
         android:backgroundTint="@color/black"
+        android:clickable="true"
+        android:id="@+id/metodopagamento"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.295"
+        app:layout_constraintHorizontal_bias="0.284"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView2"
-        app:layout_constraintVertical_bias="0.104"
+        app:layout_constraintVertical_bias="0.128"
         app:strokeColor="#818181"
         app:strokeWidth="2dp">
 
@@ -56,8 +106,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfitregular"
                 android:text="Metodo Pagamento"
-                android:textSize="12dp"
                 android:textColor="@color/white"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +120,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView2"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:backgroundTint="@color/black"
         app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +128,7 @@
         app:layout_constraintHorizontal_bias="0.284"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.492">
+        app:layout_constraintVertical_bias="0.589">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -111,14 +161,13 @@
         android:layout_height="39dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="356dp"
         android:background="@drawable/calendario_icone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.298" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/payment"
@@ -129,10 +178,10 @@
         android:background="@drawable/paymentt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description"
-        app:layout_constraintVertical_bias="0.266" />
+        app:layout_constraintVertical_bias="0.465" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView3"
@@ -194,10 +243,26 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Preço total"
         android:fontFamily="@font/outfitregular"
+        android:text="Quantidade:"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.515">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfitregular"
+        android:text="Preço total"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -238,30 +303,18 @@
     </TextView>
 
     <TextView
-        android:id="@+id/acesso_a_basic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfitregular"
-        android:text="Acesso a:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.163"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
-
-    <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/outfitregular"
-        android:layout_marginTop="20dp"
         android:text="Museu de Arte Contemporânea"
+        android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.315"
+        app:layout_constraintHorizontal_bias="0.335"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acesso_a_basic" />
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_next_basic"

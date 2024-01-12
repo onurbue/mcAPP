@@ -57,14 +57,11 @@ class Calendario : Fragment() {
             bundle.putString("price", price)
             bundle.putString("pathToImage", pathToImage)
 
-
-
-            // Navegação para o fragmento TimePicker com o Bundle contendo a data selecionada
             findNavController().navigate(R.id.ticketBasicc, bundle)
         }
 
         binding.buttonBackEvent.setOnClickListener {
-            // Faça qualquer coisa que desejar ao clicar no botão "Anterior"
+            findNavController().popBackStack()
         }
     }
 
