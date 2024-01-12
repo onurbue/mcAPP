@@ -2,10 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/museusExplore"
+    app:startDestination="@id/museusPageFrag"
     android:id="@+id/nav_graph">
 
 
+    <fragment
+        android:id="@+id/museusPageFrag"
+        android:name="com.example.projetocma.museu.MuseusPageFrag"
+        android:label="fragment_museus_page"
+        tools:layout="@layout/fragment_museus_page">
+        <action
+            android:id="@+id/action_museusPageFrag_to_qrCode"
+            app:destination="@id/qrCode" />
+    </fragment>
     <fragment
         android:id="@+id/qrCode"
         android:name="com.example.projetocma.QrCode"

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.NavBar
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseusPageBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -36,11 +37,15 @@ class MuseusPageFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navBar =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        navBar.visibility = View.GONE
+
         // Set up click listener for the button
         binding.exploreButton.setOnClickListener {
             // Navigate to the destination fragment
-            val intent = Intent(requireContext(), NavBar::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.museusExplore)
+
         }
         binding.qrCodeButton.setOnClickListener {
             // Navigate to the destination fragment

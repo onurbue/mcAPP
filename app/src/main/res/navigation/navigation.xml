@@ -6,15 +6,6 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/museusPageFrag"
-        android:name="com.example.projetocma.museu.MuseusPageFrag"
-        android:label="fragment_museus_page"
-        tools:layout="@layout/fragment_museus_page" >
-        <action
-            android:id="@+id/action_museusPageFrag_to_qrCode"
-            app:destination="@id/qrCode" />
-    </fragment>
-    <fragment
         android:id="@+id/register_fragment"
         android:name="RegisterFragment"
         android:label="fragment_register_fragment"
@@ -29,17 +20,9 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_museusPageFrag"
-            app:destination="@id/museusPageFrag" />
-        <action
             android:id="@+id/action_loginFragment_to_register_fragment"
             app:destination="@id/register_fragment" />
     </fragment>
-    <fragment
-        android:id="@+id/qrCode"
-        android:name="com.example.projetocma.QrCode"
-        android:label="fragment_qr_code"
-        tools:layout="@layout/fragment_qr_code" />
 
 
 </navigation>

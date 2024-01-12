@@ -253,6 +253,27 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="museusPageFrag">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-300" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_museusPageFrag_to_qrCode">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="obrasBottomSheet">
                     <value>
                       <LayoutPositions>
