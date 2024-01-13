@@ -9,10 +9,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.projetocma.databinding.ActivityNavBarBinding
 import com.example.projetocma.museu.MuseusExplore
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class NavBar : AppCompatActivity() {
     private lateinit var binding: ActivityNavBarBinding
     private lateinit var navController: NavController
+
 
     val homeFragment = MuseusExplore()
     val qrCodeFragment = QrCode()

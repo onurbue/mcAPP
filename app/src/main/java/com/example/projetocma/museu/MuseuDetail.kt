@@ -13,6 +13,7 @@ import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseuDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.CameraOptions
@@ -23,6 +24,7 @@ class MuseuDetail : Fragment() {
 
     private lateinit var binding: FragmentMuseuDetailBinding
     private lateinit var mapView: MapView
+    var userId = Firebase.auth.currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,9 +103,14 @@ class MuseuDetail : Fragment() {
         }
 
         binding.reserveMuseumCodeButton.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("museuId", museuId)
-            findNavController().navigate(R.id.fragmentTickets, bundle)
+            if (userId == null){
+                Toast.makeText(requireContext(), "Faça o login primeiro", Toast.LENGTH_SHORT).show()
+            }else{
+                val bundle = Bundle()
+                bundle.putString("museuId", museuId)
+                findNavController().navigate(R.id.fragmentTickets, bundle)
+            }
+
         }
 
         return binding.root

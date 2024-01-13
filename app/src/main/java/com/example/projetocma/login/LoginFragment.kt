@@ -43,8 +43,7 @@ class LoginFragment : Fragment() {
                         if (task.isSuccessful) {
                             Log.d(TAG, "signInWithEmail:success")
                             val user = auth.currentUser
-                            val intent = Intent(requireContext(), NavBar::class.java)
-                            startActivity(intent)
+                            findNavController().navigate(R.id.museusPageFrag)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)

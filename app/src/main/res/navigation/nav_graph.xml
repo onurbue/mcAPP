@@ -7,6 +7,24 @@
 
 
     <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.projetocma.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_register_fragment"
+            app:destination="@id/register_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="RegisterFragment"
+        android:label="fragment_register_fragment"
+        tools:layout="@layout/fragment_register_fragment">
+        <action
+            android:id="@+id/action_register_fragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/museusPageFrag"
         android:name="com.example.projetocma.museu.MuseusPageFrag"
         android:label="fragment_museus_page"
@@ -14,6 +32,9 @@
         <action
             android:id="@+id/action_museusPageFrag_to_qrCode"
             app:destination="@id/qrCode" />
+        <action
+            android:id="@+id/action_museusPageFrag_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/qrCode"
@@ -178,6 +199,11 @@
         android:name="com.example.projetocma.account.TicketInfo"
         android:label="fragment_ticket_info"
         tools:layout="@layout/fragment_ticket_info" />
+    <fragment
+        android:id="@+id/accountNotLogged"
+        android:name="com.example.projetocma.account.AccountNotLogged"
+        android:label="fragment_account_not_logged"
+        tools:layout="@layout/fragment_account_not_logged" />
 
 
 </navigation>

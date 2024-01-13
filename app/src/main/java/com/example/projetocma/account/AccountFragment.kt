@@ -7,20 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.projetocma.MainActivity
 
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentAccountBinding
-import com.example.projetocma.databinding.FragmentQrCodeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
 
 
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
     private lateinit var auth: FirebaseAuth
+    var userId = Firebase.auth.currentUser?.uid
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +34,14 @@ class AccountFragment : Fragment() {
         binding = FragmentAccountBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
 
+
+        if (userId == null){
+            findNavController().navigate(R.id.accountNotLogged)
+        }
+
         binding.constrainMetodoPagamento1.setOnClickListener {
             auth.signOut()
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.museusPageFrag)
         }
 
         binding.constraintContacto.setOnClickListener {

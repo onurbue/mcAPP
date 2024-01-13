@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.databinding.FragmentQrCodeBinding
 import com.example.projetocma.museu.MuseusExplore
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -137,6 +138,8 @@ class QrCode : Fragment() {
                                 bundle.putString("museuId", qrCodeModel.museuId)
                                 bundle.putString("obraId", qrCodeModel.obraId)
                                 findNavController().navigate(R.id.obrasExplore, bundle)
+                            val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+                            navBar.menu.findItem(R.id.home).isChecked = true
                         }
                     }
                 }
