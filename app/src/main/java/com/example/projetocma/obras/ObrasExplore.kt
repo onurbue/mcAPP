@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
+import com.example.projetocma.databinding.FragmentMuseusPageBinding
 import com.example.projetocma.databinding.FragmentObrasExploreBinding
 import com.example.projetocma.databinding.GridItemBinding
 import com.google.firebase.Firebase
@@ -21,9 +22,9 @@ import java.io.ByteArrayOutputStream
 
 class ObrasExplore : Fragment() {
     var obras = arrayListOf<Obras>()
-    private lateinit var binding: FragmentObrasExploreBinding
+    private var _binding: FragmentObrasExploreBinding? = null
     private var adpapter = ObrasAdapter()
-    private val imageCache = mutableMapOf<String, Bitmap?>()
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,29 +34,11 @@ class ObrasExplore : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentObrasExploreBinding.inflate(inflater, container, false)
+        _binding = FragmentObrasExploreBinding.inflate(inflater, container, false)
         binding.gridView.adapter = adpapter
         val museuId = arguments?.getString("museuId")
 
-        val db = Firebase.firestore
-
-        db.collection("museus").document(museuId!!).collection("obras")
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.obras.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.obras.add(
-                                Obras.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adpapter.notifyDataSetChanged()
-                }
-            }
+        fetchObras(museuId)
 
 
 
@@ -63,12 +46,21 @@ class ObrasExplore : Fragment() {
             findNavController().popBackStack()
         }
 
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    inner class ObrasAdapter : BaseAdapter(){
+
+        binding.setaBackk.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    inner class ObrasAdapter : BaseAdapter() {
+        val imageCache = mutableMapOf<String, Bitmap?>()
+
         override fun getCount(): Int {
             return obras.size
         }
@@ -89,55 +81,79 @@ class ObrasExplore : Fragment() {
             } else {
                 rootView = GridItemBinding.bind(convertView)
             }
+
             rootView.gridName.text = obras[position].name
 
-                obras[position].image?.let { imagePath ->
-                    if (imageCache.containsKey(imagePath)) {
-                        // Image is in cache, reuse it
-                        rootView.gridImage.setImageBitmap(imageCache[imagePath])
-                    } else {
-                        // Image not in cache, retrieve it from Firebase Storage
-                        val storage = com.google.firebase.ktx.Firebase.storage
-                        val storageRef = storage.reference
-                        val pathReference = storageRef.child(imagePath)
-                        val ONE_MEGABYTE: Long = 10 * 1024 * 1024
+            obras[position].image?.let { imagePath ->
+                if (imageCache.containsKey(imagePath)) {
+                    rootView.gridImage.setImageBitmap(imageCache[imagePath])
+                } else {
+                    val storage = com.google.firebase.ktx.Firebase.storage
+                    val storageRef = storage.reference
+                    val pathReference = storageRef.child(imagePath)
+                    val ONE_MEGABYTE: Long = 10 * 1024 * 1024
 
-                        pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener { data ->
-                            val bitmap = BitmapFactory.decodeByteArray(data, 0, data.count())
-                            rootView.gridImage.setImageBitmap(bitmap)
-
-                            // Cache the retrieved image
-                            imageCache[imagePath] = bitmap
-                        }.addOnFailureListener { exception ->
-                            // Log the exception message for debugging
-                            Log.e("FirebaseStorage", "Image retrieval failed: ${exception.message}")
-                            // Handle any errors, e.g., set a default image
-                            rootView.gridImage.setImageResource(R.drawable.default_image)
-                        }
-                    }
-                    rootView.root.setOnClickListener {
-
-                        val selectedObras = obras[position]
-                        val imageBitmap = imageCache[selectedObras.image]
-                        if (imageBitmap != null) {
-                            val stream = ByteArrayOutputStream()
-                            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                            val imageByteArray = stream.toByteArray()
-
-                            val bundle = Bundle().apply {
-                                putString("description", obras[position].description)
-                                putString("imgDescription", obras[position].imgDescription)
-                                putString("name", obras[position].name)
-                                putByteArray("image", imageByteArray)
-                            }
-                            findNavController().navigate(R.id.obrasDetail, bundle)
-                        }
+                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener { data ->
+                        val bitmap = BitmapFactory.decodeByteArray(data, 0, data.count())
+                        rootView.gridImage.setImageBitmap(bitmap)
+                        imageCache[imagePath] = bitmap
+                    }.addOnFailureListener { exception ->
+                        Log.e("FirebaseStorage", "Image retrieval failed: ${exception.message}")
+                        rootView.gridImage.setImageResource(R.drawable.default_image)
                     }
                 }
+                rootView.root.setOnClickListener {
+                    val selectedObras = obras[position]
+                    val imageBitmap = imageCache[selectedObras.image]
+                    if (imageBitmap != null) {
+                        val stream = ByteArrayOutputStream()
+                        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        val imageByteArray = stream.toByteArray()
+
+                        val bundle = Bundle().apply {
+                            putString("description", obras[position].description)
+                            putString("imgDescription", obras[position].imgDescription)
+                            putString("name", obras[position].name)
+                            putByteArray("image", imageByteArray)
+                        }
+                        findNavController().navigate(R.id.obrasDetail, bundle)
+                    }
+                }
+            }
 
             return rootView.root
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adpapter.imageCache.clear()
+        binding.gridView.adapter = null
+        _binding = null
+    }
 
+    private fun fetchObras(museuId: String?){
+
+        val db = Firebase.firestore
+
+        db.collection("museus").document(museuId!!)
+            .collection("obras")
+            .addSnapshotListener { snapshoot, error ->
+                snapshoot?.documents?.let {
+                    this.obras.clear()
+                    for (document in it) {
+                        document.data?.let { data ->
+                            this.obras.add(
+                                Obras.fromSnapshot(
+                                    document.id,
+                                    data
+                                )
+                            )
+                        }
+                    }
+                    this.adpapter.notifyDataSetChanged()
+                }
+            }
+
+    }
 }

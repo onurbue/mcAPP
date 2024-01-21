@@ -24,7 +24,8 @@ import java.io.ByteArrayOutputStream
 
 class MuseusExplore : Fragment() {
 
-    private lateinit var binding: FragmentMuseusExploreBinding
+    private  var _binding: FragmentMuseusExploreBinding? = null
+    private val binding get() = _binding!!
     var museus = arrayListOf<Museu>()
     private var adpapter = MuseusAdapter()
     private val imageCache = mutableMapOf<String, Bitmap?>()
@@ -33,7 +34,7 @@ class MuseusExplore : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMuseusExploreBinding.inflate(inflater, container, false)
+        _binding = FragmentMuseusExploreBinding.inflate(inflater, container, false)
         binding.gridView.adapter = adpapter
 
         val categoryCard = binding.categoryCard
@@ -42,17 +43,23 @@ class MuseusExplore : Fragment() {
             showCategoryMenu(categoryCard)
         }
 
-        fetchMuseums()
-
         val navBar =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
+
+        fetchMuseums()
+
+
         val view = binding.root
 
 
 
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 
@@ -122,6 +129,8 @@ class MuseusExplore : Fragment() {
                             putByteArray("image", imageByteArray)
                             putString("description", selectedMuseu.description)
                             putString("museuId", museus[position].id)
+                            putDouble("latitude", museus[position].latitude)
+                            putDouble("longitude", museus[position].longitude)
                         }
                         findNavController().navigate(R.id.museuDetail, bundle)
                     }
@@ -200,6 +209,11 @@ class MuseusExplore : Fragment() {
                     this.adpapter.notifyDataSetChanged()
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Set the binding to null to release resources
     }
 
     }

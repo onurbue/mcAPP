@@ -18,11 +18,11 @@ import com.google.firebase.firestore.firestore
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
-import models.Location
 
 class MuseuDetail : Fragment() {
 
-    private lateinit var binding: FragmentMuseuDetailBinding
+    private var _binding: FragmentMuseuDetailBinding? = null
+    private val binding get() = _binding!!
     private lateinit var mapView: MapView
     var userId = Firebase.auth.currentUser?.uid
 
@@ -36,7 +36,7 @@ class MuseuDetail : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMuseuDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentMuseuDetailBinding.inflate(inflater, container, false)
         mapView = binding.appCompatImageView2
 
 
@@ -49,24 +49,11 @@ class MuseuDetail : Fragment() {
         val description = arguments?.getString("description")
         val imageByteArray = arguments?.getByteArray("image")
         val museuId = arguments?.getString("museuId")
+        val latitude = arguments?.getDouble("latitude")
+        val longitude = arguments?.getDouble("longitude")
         binding.textViewMuseumName.text = name
 
-        val db = Firebase.firestore
-        db.collection("Location")
-            .whereEqualTo("museuId", museuId)
-            .get()
-            .addOnSuccessListener { documents ->
-                if (!documents.isEmpty) {
-                    val document = documents.first()
-                    val location = Location.fromSnapshot(document.id, document.data)
-                    configMap(location, mapView)
-                } else {
-                    showToast("No document found", requireContext())
-                }
-            }
-            .addOnFailureListener {
-                showToast("An error occurred: ${it.localizedMessage}", requireContext())
-            }
+        configMap(latitude,longitude,mapView)
 
         if (imageByteArray != null) {
             val bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
@@ -115,14 +102,13 @@ class MuseuDetail : Fragment() {
 
         return binding.root
 
-
     }
 
-    private fun configMap(location: models.Location, mapView: MapView) {
+    private fun configMap(latitude: Double?, longitude: Double?, mapView: MapView) {
 
         mapView.mapboxMap.setCamera(
             CameraOptions.Builder()
-                .center(com.mapbox.geojson.Point.fromLngLat(location.longitude, location.latitude))
+                .center(com.mapbox.geojson.Point.fromLngLat(longitude!!, latitude!!))
                 .pitch(3.0)
                 .zoom(15.0)
                 .bearing(0.0)
@@ -132,6 +118,11 @@ class MuseuDetail : Fragment() {
 
     private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Set the binding to null to release resources
     }
 
 

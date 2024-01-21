@@ -60,8 +60,13 @@ class MuseusPageFrag : Fragment() {
         binding.qrCodeButton.setOnClickListener {
             // Navigate to the destination fragment
             findNavController().navigate(R.id.qrCode)
+            val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+            navBar.menu.findItem(R.id.qrCode).isChecked = true
         }
-
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Set the binding to null to release resources
+    }
 }

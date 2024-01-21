@@ -25,24 +25,30 @@ import java.util.Locale
 
 class HistoriaMuseu : Fragment() {
 
-    private lateinit var binding: FragmentHistoriaMuseuBinding
+    private var _binding: FragmentHistoriaMuseuBinding? = null
+    private val binding get() = _binding!!
     private lateinit var textToSpeech: TextToSpeech
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHistoriaMuseuBinding.inflate(inflater, container, false)
+        _binding = FragmentHistoriaMuseuBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val name = arguments?.getString("name")
         val imageResId = arguments?.getByteArray("image")
         val description = arguments?.getString("description")
 
-        val view = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        view.visibility = View.GONE
+        val navView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        navView.visibility = View.GONE
 
         val decodedBitmap = BitmapFactory.decodeByteArray(imageResId, 0, imageResId!!.size)
 
@@ -63,8 +69,6 @@ class HistoriaMuseu : Fragment() {
                 textToSpeech.shutdown()
             }
         }
-
-        return binding.root
     }
 
     private fun showDialog(name: String?,  imageBitmap: Bitmap?, description: String?) {
@@ -72,10 +76,10 @@ class HistoriaMuseu : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.fragment_historia_bottom_sheet)
 
-        val audioButton : ImageView = dialog.findViewById(R.id.audiobutton)
+        val audioButton: ImageView = dialog.findViewById(R.id.audiobutton)
         val bottomSheetImageView: ImageView = dialog.findViewById(R.id.bottomSheetHistoriaImg)
-        val bottomSheetName: TextView =  dialog.findViewById(R.id.textViewImgTitle)
-        val bottomSheetDescription: TextView =  dialog.findViewById(R.id.textViewDescriptionHistoria)
+        val bottomSheetName: TextView = dialog.findViewById(R.id.textViewImgTitle)
+        val bottomSheetDescription: TextView = dialog.findViewById(R.id.textViewDescriptionHistoria)
 
         textToSpeech = TextToSpeech(requireContext()){status ->
             if(status == TextToSpeech.SUCCESS){
@@ -94,7 +98,7 @@ class HistoriaMuseu : Fragment() {
 
         audioButton.setOnClickListener {
             if (description!!.isNotEmpty()){
-                textToSpeech.speak(description,TextToSpeech.QUEUE_FLUSH,null,null)
+                textToSpeech.speak(description, TextToSpeech.QUEUE_FLUSH, null, null)
             }
         }
 
@@ -105,4 +109,8 @@ class HistoriaMuseu : Fragment() {
         dialog.window?.setGravity(Gravity.BOTTOM)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Set the binding to null to release resources
+    }
 }
