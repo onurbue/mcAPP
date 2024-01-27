@@ -16,6 +16,7 @@ import com.example.projetocma.databinding.FragmentMuseusExploreBinding
 import com.example.projetocma.databinding.GridItemBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
 import models.Museu
@@ -26,7 +27,7 @@ class MuseusExplore : Fragment() {
 
     private  var _binding: FragmentMuseusExploreBinding? = null
     private val binding get() = _binding!!
-    var museus = arrayListOf<Museu>()
+    var museus = mutableListOf<Museu>()
     private var adpapter = MuseusAdapter()
     private val imageCache = mutableMapOf<String, Bitmap?>()
 
@@ -47,7 +48,11 @@ class MuseusExplore : Fragment() {
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
 
-        fetchMuseums()
+        Museu.fetchMuseums {fetchedMuseums->
+            museus.clear()
+            museus.addAll(fetchedMuseums)
+            this.adpapter.notifyDataSetChanged()
+        }
 
 
         val view = binding.root
@@ -132,6 +137,7 @@ class MuseusExplore : Fragment() {
                             putDouble("latitude", museus[position].latitude)
                             putDouble("longitude", museus[position].longitude)
                         }
+
                         findNavController().navigate(R.id.museuDetail, bundle)
                     }
                 }
@@ -149,7 +155,10 @@ class MuseusExplore : Fragment() {
             when (menuItem.itemId) {
                 R.id.menu_category_art -> filterMuseumsByCategory("Arte")
                 R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
-                R.id.menu_category_none -> fetchMuseums()
+                R.id.menu_category_none -> Museu.fetchMuseums {
+                    museus.clear()
+                    museus.addAll(it)
+                    this.adpapter.notifyDataSetChanged()}
                 // Add more categories as needed
             }
             true
@@ -160,61 +169,19 @@ class MuseusExplore : Fragment() {
     }
 
     private fun filterMuseumsByCategory(category: String) {
-        getMuseumsByCategory(category) { filteredMuseums ->
+        Museu.getMuseumsByCategory(category) { filteredMuseums ->
             museus = ArrayList(filteredMuseums)
             adpapter.notifyDataSetChanged()
         }
     }
 
-    private fun getMuseumsByCategory(category: String, callback: (List<Museu>) -> Unit) {
-        val db = Firebase.firestore
-
-        db.collection("museus")
-            .whereEqualTo("categoria", category)
-            .addSnapshotListener { snapshot, error ->
-                snapshot?.documents?.let {
-                    val museums = mutableListOf<Museu>()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            museums.add(
-                                Museu.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    callback(museums)
-                }
-            }
-    }
-
-    private fun fetchMuseums(){
-        val db = Firebase.firestore
-
-        db.collection("museus")
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.museus.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.museus.add(
-                                Museu.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adpapter.notifyDataSetChanged()
-                }
-            }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Set the binding to null to release resources
     }
+
+
 
     }
 

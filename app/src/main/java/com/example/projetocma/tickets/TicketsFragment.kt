@@ -18,43 +18,35 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
 import models.Tickets
 import java.io.ByteArrayOutputStream
+import java.util.Date
 
 class TicketsFragment : Fragment() {
-    private lateinit var binding: FragmentTicketsBinding
+    private var _binding: FragmentTicketsBinding? = null
     var tickets = arrayListOf<Tickets>()
     private var adpapter = TicketsAdapter()
     private val imageCache = mutableMapOf<String, Bitmap?>()
+    private var museuId: String? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentTicketsBinding.inflate(inflater, container, false)
 
-        val museuId = arguments?.getString("museuId")
+    ): View? {
+
+        _binding = FragmentTicketsBinding.inflate(inflater, container, false)
+
+         museuId = arguments?.getString("museuId")
         binding.listView.adapter = adpapter
 
 
-        val db = Firebase.firestore
-
-        db.collection("museus").document(museuId!!).collection("tickets")
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.tickets.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.tickets.add(
-                                Tickets.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adpapter.notifyDataSetChanged()
-                }
-            }
+    Tickets.fetchTickets(museuId!!){
+        tickets.clear()
+        tickets.addAll(it)
+        this.adpapter.notifyDataSetChanged()
+    }
 
 
         binding.setaBackk.setOnClickListener {
@@ -128,8 +120,9 @@ class TicketsFragment : Fragment() {
                         putString("pathToImage", selectedTicket.pathToImg)
                         putByteArray("image", imageByteArray)
                         putString("description", selectedTicket.description)
-                        putString("ticketID", tickets[position].id)
+                        putString("ticketId", tickets[position].id)
                         putString("price", tickets[position].price)
+                        putString("museuId", museuId)
                     }
                     findNavController().navigate(R.id.calendario, bundle)
                 }
@@ -138,5 +131,10 @@ class TicketsFragment : Fragment() {
 
             return rootView.root
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

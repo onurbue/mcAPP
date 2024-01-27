@@ -1,6 +1,7 @@
 package com.example.projetocma.tickets
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,10 @@ class Calendario : Fragment() {
             val description = arguments?.getString("description")
             val price = arguments?.getString("price")
             val pathToImage = arguments?.getString("pathToImage")
+            val museuId = arguments?.getString("museuId")
+            val ticketId = arguments?.getString("ticketId")
+            Log.d("museuId", museuId!!)
+            Log.d("ticketid", ticketId!!)
             val bundle = Bundle()
             bundle.putSerializable("selectedDate", selectedDate)
             bundle.putString("name", name)
@@ -56,6 +61,8 @@ class Calendario : Fragment() {
             bundle.putString("description", description)
             bundle.putString("price", price)
             bundle.putString("pathToImage", pathToImage)
+            bundle.putString("museuId",museuId)
+            bundle.putString("ticketId", ticketId)
 
             findNavController().navigate(R.id.ticketBasicc, bundle)
         }

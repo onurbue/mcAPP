@@ -8,8 +8,10 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.projetocma.R
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
-class Obras(
+data class Obras(
     var id: String?,
     var name: String,
     var image: String?,
@@ -24,6 +26,33 @@ class Obras(
                 snapshot.get("description") as String,
                 snapshot.get("imgDescription") as String
             )
+        }
+
+         fun fetchObras(museuId: String?, callback: (List<Obras>)  -> Unit){
+
+            val db = Firebase.firestore
+
+            db.collection("museus").document(museuId!!)
+                .collection("obras")
+                .addSnapshotListener { snapshoot, error ->
+                    snapshoot?.documents?.let {
+                        val obras = arrayListOf<Obras>()
+                        obras.clear()
+                        for (document in it) {
+                            document.data?.let { data ->
+                                obras.add(
+                                    Obras.fromSnapshot(
+                                        document.id,
+                                        data
+                                    )
+                                )
+                            }
+                        }
+                        callback(obras)
+                    }
+
+                }
+
         }
     }
 }

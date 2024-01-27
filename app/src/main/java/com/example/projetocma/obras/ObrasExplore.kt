@@ -38,7 +38,11 @@ class ObrasExplore : Fragment() {
         binding.gridView.adapter = adpapter
         val museuId = arguments?.getString("museuId")
 
-        fetchObras(museuId)
+        Obras.fetchObras(museuId) {
+            obras.clear()
+            obras.addAll(it)
+            this.adpapter.notifyDataSetChanged()
+        }
 
 
 
@@ -132,28 +136,4 @@ class ObrasExplore : Fragment() {
         _binding = null
     }
 
-    private fun fetchObras(museuId: String?){
-
-        val db = Firebase.firestore
-
-        db.collection("museus").document(museuId!!)
-            .collection("obras")
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.obras.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.obras.add(
-                                Obras.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adpapter.notifyDataSetChanged()
-                }
-            }
-
-    }
 }

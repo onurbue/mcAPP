@@ -1,6 +1,6 @@
 package models
 
-class TicketsComprados (
+data class TicketsComprados (
     var id: String,
     var userId : String?,
     var date : String?,

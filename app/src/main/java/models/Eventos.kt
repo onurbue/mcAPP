@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.projetocma.R
 
-class Eventos(
+data class Eventos(
     var id: String?,
     var name: String,
     var image: String,

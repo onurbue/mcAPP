@@ -3,6 +3,7 @@ package com.example.projetocma.museu
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.projetocma.databinding.FragmentMuseuDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.CameraOptions
@@ -51,6 +53,7 @@ class MuseuDetail : Fragment() {
         val museuId = arguments?.getString("museuId")
         val latitude = arguments?.getDouble("latitude")
         val longitude = arguments?.getDouble("longitude")
+        updateQuantityClicked(museuId!!)
         binding.textViewMuseumName.text = name
 
         configMap(latitude,longitude,mapView)
@@ -84,7 +87,6 @@ class MuseuDetail : Fragment() {
             bundle.putString("museuId", museuId)
             findNavController().navigate(R.id.eventFragment, bundle)
         }
-        //asaadsadsadsad
         binding.setaBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -125,5 +127,16 @@ class MuseuDetail : Fragment() {
         _binding = null // Set the binding to null to release resources
     }
 
+    fun updateQuantityClicked(museuId: String){
+        val db = Firebase.firestore
+
+        db.collection("museus").document(museuId)
+            .update("quantityClicked", FieldValue.increment(1))
+            .addOnSuccessListener { documentReference ->
+                Log.d("quantity", "Quantity updated successfully!")
+            }
+            .addOnFailureListener { e ->
+            }
+    }
 
 }

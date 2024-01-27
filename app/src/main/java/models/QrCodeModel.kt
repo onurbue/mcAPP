@@ -1,6 +1,6 @@
 package models
 
-class QrCodeModel (
+data class QrCodeModel (
     var id: String,
     var qrCodeString : String,
     var museuId : String,

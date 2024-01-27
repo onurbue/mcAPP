@@ -15,8 +15,10 @@ import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentTicketBasiccBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import models.Tickets
 import models.TicketsComprados
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -46,10 +48,16 @@ class TicketBasic : Fragment() {
         val price = arguments?.getString("price")
         val pathToImage = arguments?.getString("pathToImage")
         val selectedDate: Date? = arguments?.getSerializable("selectedDate") as? Date
+        val museuId = arguments?.getString("museuId")
+        val ticketId = arguments?.getString("ticketId")
+        Log.d("ticketid", ticketId!!)
+        Log.d("museuId", museuId!!)
 
         val initialPrice = price!!.toInt()
 
-        binding.ticketPrice.text = price + "€"
+        var formattedPrice = price + "€"
+
+        binding.ticketPrice.text = formattedPrice
         binding.ticketName.text = name
         binding.description.text = description
         binding.quantidade.text = quantity.toString()
@@ -74,7 +82,6 @@ class TicketBasic : Fragment() {
             val bitmap = BitmapFactory.decodeByteArray(image, 0, image.size)
             binding.ticketImg.setImageBitmap(bitmap)
         } else {
-            // Handle the case where imageByteArray is null (e.g., show a default image)
             binding.ticketImg.setImageResource(R.drawable.default_image)
         }
 
@@ -94,7 +101,7 @@ class TicketBasic : Fragment() {
             val db = FirebaseFirestore.getInstance()
              for (i in 0 until quantity) {
 
-                 val ticket = TicketsComprados(
+                 val ticketComprado = TicketsComprados(
                      id = randomUid,
                      date = formattedDate,
                      userId = userId,
@@ -103,16 +110,11 @@ class TicketBasic : Fragment() {
                      description = description,
                      price = price
                  )
+                 val ticketMap = ticketComprado.toHashMap()
 
-                 val ticketMap = ticket.toHashMap()
+                Tickets.addTicket(ticketMap)
 
-                db.collection("bilhetesUser")
-                    .add(ticketMap)
-                    .addOnSuccessListener { documentReference ->
-                        val ticketId = documentReference.id
-                    }
-                    .addOnFailureListener { e ->
-                    }
+                 Tickets.updateTicketBought(museuId, ticketId)
             }
 
             showToast("O pagamento foi bem sucedido")
@@ -136,18 +138,7 @@ class TicketBasic : Fragment() {
         val popupMenu = PopupMenu(requireContext(), anchorView)
         popupMenu.menuInflater.inflate(R.menu.metodo_pagamento, popupMenu.menu)
 
-        // Set a click listener for each menu item
-        /*popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_category_art -> filterMuseumsByCategory("Arte")
-                R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
-                R.id.menu_category_none -> fetchMuseums()
-                // Add more categories as needed
-            }
-            true
-        }*/
 
-        // Show the popup menu
         popupMenu.show()
     }
 
