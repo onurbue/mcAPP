@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseusExploreBinding
 import com.example.projetocma.databinding.GridItemBinding
+import com.example.projetocma.room.AppDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
@@ -48,11 +49,19 @@ class MuseusExplore : Fragment() {
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
 
-        Museu.fetchMuseums {fetchedMuseums->
-            museus.clear()
-            museus.addAll(fetchedMuseums)
-            this.adpapter.notifyDataSetChanged()
+        val appDatabase = AppDatabase.getDatabase(requireContext())
+
+        if (!appDatabase?.museuDao()?.hasAnyRecord()!!) {
+            Museu.fetchMuseums { fetchedMuseums ->
+                appDatabase.museuDao().insertMuseuList(fetchedMuseums)
+            }
         }
+
+        val localMuseums = appDatabase.museuDao().getAll() ?: emptyList()
+
+        museus.clear()
+        museus.addAll(localMuseums)
+        this.adpapter.notifyDataSetChanged()
 
 
         val view = binding.root

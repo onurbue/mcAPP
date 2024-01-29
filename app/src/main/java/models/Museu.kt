@@ -7,23 +7,28 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.projetocma.R
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import org.checkerframework.checker.nullness.qual.NonNull
 
 
+@Entity
 data class Museu(
- var id: String?,
-    var name: String,
-    var image: String?,
-    var description: String,
-    var categoria: String?,
-    var latitude : Double,
-    var longitude: Double,
-    var quantityClicked: Long
+    @PrimaryKey
+    @ColumnInfo(name = "id_museu")
+    var id: String ,
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "path_to_image") var image: String?,
+    @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "categoria")var categoria: String?,
+    @ColumnInfo(name = "latitude")var latitude : Double,
+    @ColumnInfo(name = "longitude")var longitude: Double,
+    @ColumnInfo(name = "quantity_clicked")var quantityClicked: Long
 
 
 
