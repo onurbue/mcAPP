@@ -9,19 +9,23 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.projetocma.R
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 
-
+@Entity
 data class Tickets(
-    var id: String,
-    var name: String,
-    var pathToImg: String?,
-    var price: String,
-    var description: String,
-    var quantityBought: Long
+    @PrimaryKey
+    @ColumnInfo(name = "id_ticket") var id: String,
+    @ColumnInfo(name = "name_ticket")var name: String,
+    @ColumnInfo(name = "img_ticket")var pathToImg: String?,
+    @ColumnInfo(name = "price_ticket")var price: String,
+    @ColumnInfo(name = "description_ticket")var description: String,
+    @ColumnInfo(name = "quantity_bought_ticket")var quantityBought: Long
 ) {
     fun toHasMap(): Map<String, Any?> {
         return hashMapOf(

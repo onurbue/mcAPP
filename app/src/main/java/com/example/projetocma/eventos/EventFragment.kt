@@ -13,11 +13,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentEventBinding
 import com.example.projetocma.databinding.GridEventItemBinding
+import com.example.projetocma.room.AppDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
 import models.Eventos
+import models.Museu
 import java.io.ByteArrayOutputStream
 
 
@@ -30,35 +32,30 @@ class EventFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEventBinding.inflate(inflater, container, false)
+        val museuId = arguments?.getString("museuId")
+        val appDatabase = AppDatabase.getDatabase(requireContext())
         binding.gridViewEventos.adapter = adpapter
         val navBar =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
 
-        val museuId = arguments?.getString("museuId")
-        Log.e("event", "museu id: ${museuId}")
 
-        val db = Firebase.firestore
 
-        db.collection("museus").document(museuId!!).collection("eventos")
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.eventos.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.eventos.add(
-                                Eventos.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adpapter.notifyDataSetChanged()
-                }
+        if (!appDatabase?.eventosDao()?.hasAnyRecord()!!) {
+            Eventos.fetchEventos(museuId) {
+                appDatabase.eventosDao().insertEventosList(it)
             }
+            val localEventos = appDatabase.eventosDao().getAll()
+            eventos.clear()
+            eventos.addAll(localEventos)
+        }else{
+            val localEventos = appDatabase.eventosDao().getAll()
+            eventos.clear()
+            eventos.addAll(localEventos)
+        }
+        adpapter.notifyDataSetChanged()
 
 
 
@@ -85,18 +82,17 @@ class EventFragment : Fragment() {
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val rootView: GridEventItemBinding
 
-            if (convertView == null) {
-                rootView = GridEventItemBinding.inflate(layoutInflater, parent, false)
+            val rootView: GridEventItemBinding = if (convertView == null) {
+                GridEventItemBinding.inflate(layoutInflater, parent, false)
             } else {
-                rootView = GridEventItemBinding.bind(convertView)
+                GridEventItemBinding.bind(convertView)
             }
 
             rootView.textViewEventTitle.text = eventos[position].name
             rootView.textViewEventDate.text = eventos[position].date
 
-            eventos[position].image?.let { imagePath ->
+            eventos[position].image.let { imagePath ->
                 if (imageCache.containsKey(imagePath)) {
                     // Image is in cache, reuse it
                     rootView.eventImage.setImageBitmap(imageCache[imagePath])

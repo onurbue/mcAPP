@@ -37,6 +37,13 @@ class MuseusExplore : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMuseusExploreBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.gridView.adapter = adpapter
 
         val categoryCard = binding.categoryCard
@@ -51,29 +58,22 @@ class MuseusExplore : Fragment() {
 
         val appDatabase = AppDatabase.getDatabase(requireContext())
 
+
         if (!appDatabase?.museuDao()?.hasAnyRecord()!!) {
             Museu.fetchMuseums { fetchedMuseums ->
                 appDatabase.museuDao().insertMuseuList(fetchedMuseums)
             }
+            val localMuseums = appDatabase.museuDao().getAll()
+            museus.clear()
+            museus.addAll(localMuseums)
+        }else{
+            val localMuseums = appDatabase.museuDao().getAll()
+            museus.clear()
+            museus.addAll(localMuseums)
+
         }
+        adpapter.notifyDataSetChanged()
 
-        val localMuseums = appDatabase.museuDao().getAll() ?: emptyList()
-
-        museus.clear()
-        museus.addAll(localMuseums)
-        this.adpapter.notifyDataSetChanged()
-
-
-        val view = binding.root
-
-
-
-
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
 
@@ -164,7 +164,7 @@ class MuseusExplore : Fragment() {
             when (menuItem.itemId) {
                 R.id.menu_category_art -> filterMuseumsByCategory("Arte")
                 R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
-                R.id.menu_category_none -> Museu.fetchMuseums {
+                R.id.menu_category_none ->  Museu.fetchMuseums {
                     museus.clear()
                     museus.addAll(it)
                     this.adpapter.notifyDataSetChanged()}

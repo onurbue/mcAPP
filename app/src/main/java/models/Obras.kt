@@ -7,16 +7,23 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.projetocma.R
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
+@Entity
+
 data class Obras(
-    var id: String?,
-    var name: String,
-    var image: String?,
-    var description: String,
-    var imgDescription: String
+    @PrimaryKey
+    @ColumnInfo(name ="id_obra")
+    var id: String,
+    @ColumnInfo(name ="name_obra") var name: String,
+    @ColumnInfo(name = "image_obra") var image: String?,
+    @ColumnInfo(name ="description_obra")var description: String,
+    @ColumnInfo(name ="img_description_obra")var imgDescription: String
 ){
     companion object{
         fun fromSnapshot(id : String, snapshot: Map<String,Any>) : Obras{

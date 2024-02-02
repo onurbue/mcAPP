@@ -8,15 +8,23 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.projetocma.R
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
+@Entity
 data class Eventos(
-    var id: String?,
-    var name: String,
-    var image: String,
-    var date: String,
-    var description: String,
-    var imgDescription: String?
+    @PrimaryKey
+    @ColumnInfo(name = "evento_id")
+    var id: String,
+    @ColumnInfo(name = "evento_name") var name: String,
+    @ColumnInfo(name = "evento_image") var image: String,
+    @ColumnInfo(name = "evento_date") var date: String,
+    @ColumnInfo(name = "evento_description") var description: String,
+    @ColumnInfo(name = "evento_img_description")  var imgDescription: String?
 ) {
     companion object {
         fun fromSnapshot(id: String, snapshot: Map<String, Any>): Eventos {
@@ -29,5 +37,31 @@ data class Eventos(
                 snapshot["imgDescription"] as? String?
             )
         }
+
+        fun fetchEventos(museuId : String?, callback: (List<Eventos>) -> Unit){
+
+            val db = Firebase.firestore
+
+            db.collection("museus").document(museuId!!).collection("eventos")
+                .addSnapshotListener { snapshoot, error ->
+                    snapshoot?.documents?.let {
+                        var eventos = arrayListOf<Eventos>()
+                        eventos.clear()
+                        for (document in it) {
+                            document.data?.let { data ->
+                                eventos.add(
+                                    fromSnapshot(
+                                        document.id,
+                                        data
+                                    )
+                                )
+                            }
+                        }
+                        callback(eventos)
+                    }
+                }
+        }
     }
+
+
 }

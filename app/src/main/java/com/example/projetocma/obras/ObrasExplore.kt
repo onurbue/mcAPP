@@ -14,9 +14,11 @@ import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseusPageBinding
 import com.example.projetocma.databinding.FragmentObrasExploreBinding
 import com.example.projetocma.databinding.GridItemBinding
+import com.example.projetocma.room.AppDatabase
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
+import models.Eventos
 import models.Obras
 import java.io.ByteArrayOutputStream
 
@@ -35,26 +37,36 @@ class ObrasExplore : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentObrasExploreBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val appDatabase = AppDatabase.getDatabase(requireContext())
         binding.gridView.adapter = adpapter
         val museuId = arguments?.getString("museuId")
 
-        Obras.fetchObras(museuId) {
+
+        if (!appDatabase?.obrasDao()?.hasAnyRecord()!!) {
+            Obras.fetchObras(museuId) {
+                appDatabase.obrasDao().insertObrasList(it)
+            }
+            val localObras = appDatabase.obrasDao().getAll()
             obras.clear()
-            obras.addAll(it)
-            this.adpapter.notifyDataSetChanged()
+            obras.addAll(localObras)
+        }else{
+            val localObras = appDatabase.obrasDao().getAll()
+            obras.clear()
+            obras.addAll(localObras)
         }
+        adpapter.notifyDataSetChanged()
+
 
 
 
         binding.setaBackk.setOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
 
         binding.setaBackk.setOnClickListener {

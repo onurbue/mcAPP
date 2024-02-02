@@ -13,9 +13,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentTicketsBinding
 import com.example.projetocma.databinding.TicketGridItemBinding
+import com.example.projetocma.room.AppDatabase
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
+import models.Obras
 import models.Tickets
 import java.io.ByteArrayOutputStream
 import java.util.Date
@@ -35,25 +37,38 @@ class TicketsFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
-
         _binding = FragmentTicketsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-         museuId = arguments?.getString("museuId")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val appDatabase = AppDatabase.getDatabase(requireContext())
+
+        museuId = arguments?.getString("museuId")
         binding.listView.adapter = adpapter
 
 
-    Tickets.fetchTickets(museuId!!){
-        tickets.clear()
-        tickets.addAll(it)
-        this.adpapter.notifyDataSetChanged()
-    }
 
+        if (!appDatabase?.ticketsCompradosDao()?.hasAnyRecord()!!) {
+            Tickets.fetchTickets(museuId!!) {
+                appDatabase.ticketsDao().insertTicketsList(it)
+            }
+            val localTickets = appDatabase.ticketsDao().getAll()
+            tickets.clear()
+            tickets.addAll(localTickets)
+
+        }else{
+            val localTickets = appDatabase.ticketsDao().getAll()
+            tickets.clear()
+            tickets.addAll(localTickets)
+        }
+        adpapter.notifyDataSetChanged()
 
         binding.setaBackk.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        return binding.root
     }
 
 

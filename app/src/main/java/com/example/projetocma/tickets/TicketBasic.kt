@@ -94,7 +94,6 @@ class TicketBasic : Fragment() {
         }
 
 
-        val db = Firebase.firestore
 
         binding.buttonNextBasic.setOnClickListener {
 

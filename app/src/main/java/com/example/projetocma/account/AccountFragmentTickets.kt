@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentAccountTicketsBinding
 import com.example.projetocma.databinding.TicketGridItemBinding
+import com.example.projetocma.room.AppDatabase
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
@@ -38,25 +39,24 @@ class AccountFragmentTickets : Fragment() {
         binding.listViewBilhetes.adapter = adapter
         val userId = Firebase.auth.currentUser
 
-        val db = Firebase.firestore
 
-        db.collection("bilhetesUser").whereEqualTo("userId", userId?.uid )
-            .addSnapshotListener { snapshoot, error ->
-                snapshoot?.documents?.let {
-                    this.ticketsComprados.clear()
-                    for (document in it) {
-                        document.data?.let { data ->
-                            this.ticketsComprados.add(
-                                TicketsComprados.fromSnapshot(
-                                    document.id,
-                                    data
-                                )
-                            )
-                        }
-                    }
-                    this.adapter.notifyDataSetChanged()
-                }
+        val appDatabase = AppDatabase.getDatabase(requireContext())
+
+
+        if (!appDatabase?.ticketsCompradosDao()?.hasAnyRecord()!!) {
+            TicketsComprados.getTicketsComprados(userId?.uid) {
+                appDatabase.ticketsCompradosDao().insertTicketsCompradosList(it)
             }
+            val localTickets = appDatabase.ticketsCompradosDao().getAll()
+            ticketsComprados.clear()
+            ticketsComprados.addAll(localTickets)
+        }else{
+            val localTickets = appDatabase.ticketsCompradosDao().getAll()
+            ticketsComprados.clear()
+            ticketsComprados.addAll(localTickets)
+
+        }
+        adapter.notifyDataSetChanged()
 
         binding.backIconeTickets.setOnClickListener {
             findNavController().popBackStack()

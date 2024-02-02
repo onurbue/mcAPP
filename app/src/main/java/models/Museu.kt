@@ -1,6 +1,7 @@
 package models
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,20 +59,15 @@ data class Museu(
                     for (document in querySnapshot.documents) {
                         document.data?.let { data ->
                             museums.add(
-                                Museu.fromSnapshot(
+                                fromSnapshot(
                                     document.id,
                                     data
                                 )
                             )
                         }
                     }
-
                     onCompletion(museums)
-                }
-                .addOnFailureListener { exception ->
-                    // Handle errors
-                    // You might want to provide error information to the caller
-                    onCompletion(ArrayList())  // Passing an empty list in case of failure
+
                 }
         }
 
@@ -86,7 +82,7 @@ data class Museu(
                         for (document in it) {
                             document.data?.let { data ->
                                 museums.add(
-                                    Museu.fromSnapshot(
+                                    fromSnapshot(
                                         document.id,
                                         data
                                     )
