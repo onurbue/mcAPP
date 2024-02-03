@@ -125,7 +125,7 @@
         android:id="@+id/eventDetail"
         android:name="com.example.projetocma.eventos.EventDetail"
         android:label="fragment_event_detail"
-        tools:layout="@layout/fragment_event_detail" >
+        tools:layout="@layout/fragment_event_detail">
         <action
             android:id="@+id/action_eventDetail_to_eventBottomSheet"
             app:destination="@id/eventBottomSheet" />
@@ -175,19 +175,41 @@
         android:id="@+id/obrasExplore"
         android:name="com.example.projetocma.obras.ObrasExplore"
         android:label="fragment_obras_explore"
-        tools:layout="@layout/fragment_obras_explore" >
+        tools:layout="@layout/fragment_obras_explore">
         <action
             android:id="@+id/action_obrasExplore_to_obrasDetail"
             app:destination="@id/obrasDetail" />
+        <argument
+            android:name="teste12"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
     </fragment>
     <fragment
         android:id="@+id/obrasDetail"
         android:name="com.example.projetocma.obras.ObrasDetail"
         android:label="fragment_obras_detail"
-        tools:layout="@layout/fragment_obras_detail" >
+        tools:layout="@layout/fragment_obras_detail">
+
         <action
             android:id="@+id/action_obrasDetail_to_obrasBottomSheet"
             app:destination="@id/obrasBottomSheet" />
+        <argument
+            android:name="obraId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="museuId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            android:autoVerify="true"
+            app:uri="museumconnect.com/museus/{museuId}/obras/{obraId}" />
+
     </fragment>
     <fragment
         android:id="@+id/obrasBottomSheet"

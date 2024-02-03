@@ -32,6 +32,8 @@ class NavBar : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
+
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> navController.navigate(R.id.museusExplore)
