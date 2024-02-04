@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.room.InvalidationTracker
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentEventBinding
 import com.example.projetocma.databinding.GridEventItemBinding
@@ -20,21 +22,33 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
 import models.Eventos
 import models.Museu
+import models.Utility
 import java.io.ByteArrayOutputStream
 
 
 class EventFragment : Fragment() {
     var eventos = arrayListOf<Eventos>()
     private var adpapter = EventosAdapter()
-    private val imageCache = mutableMapOf<String, Bitmap?>()
+    var museuId: String? = null
+    private  var _binding: FragmentEventBinding? = null
 
-    private lateinit var binding: FragmentEventBinding
+    private val binding get() = _binding!!
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+         museuId = arguments?.getString("museuId")
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEventBinding.inflate(inflater, container, false)
-        val museuId = arguments?.getString("museuId")
+        _binding = FragmentEventBinding.inflate(inflater, container, false)
+
         val appDatabase = AppDatabase.getDatabase(requireContext())
         binding.gridViewEventos.adapter = adpapter
         val navBar =
@@ -42,20 +56,15 @@ class EventFragment : Fragment() {
         navBar.visibility = View.VISIBLE
 
 
-
-        if (!appDatabase?.eventosDao()?.hasAnyRecord()!!) {
-            Eventos.fetchEventos(museuId) {
+        if(appDatabase != null){
+            Eventos.fetchEventos(museuId){
                 appDatabase.eventosDao().insertEventosList(it)
             }
-            val localEventos = appDatabase.eventosDao().getAll()
-            eventos.clear()
-            eventos.addAll(localEventos)
-        }else{
-            val localEventos = appDatabase.eventosDao().getAll()
-            eventos.clear()
-            eventos.addAll(localEventos)
+            appDatabase.eventosDao().getAll().observe(viewLifecycleOwner, Observer {
+                    eventos = it as ArrayList<Eventos>
+                    adpapter.notifyDataSetChanged()
+                })
         }
-        adpapter.notifyDataSetChanged()
 
 
 
@@ -91,49 +100,16 @@ class EventFragment : Fragment() {
 
             rootView.textViewEventTitle.text = eventos[position].name
             rootView.textViewEventDate.text = eventos[position].date
-
-            eventos[position].image.let { imagePath ->
-                if (imageCache.containsKey(imagePath)) {
-                    // Image is in cache, reuse it
-                    rootView.eventImage.setImageBitmap(imageCache[imagePath])
-                } else {
-                    // Image not in cache, retrieve it from Firebase Storage
-                    val storage = com.google.firebase.ktx.Firebase.storage
-                    val storageRef = storage.reference
-                    val pathReference = storageRef.child(imagePath)
-                    val ONE_MEGABYTE: Long = 10 * 1024 * 1024
-
-                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener { data ->
-                        val bitmap = BitmapFactory.decodeByteArray(data, 0, data.count())
-                        rootView.eventImage.setImageBitmap(bitmap)
-
-                        // Cache the retrieved image
-                        imageCache[imagePath] = bitmap
-                    }.addOnFailureListener { exception ->
-                        // Log the exception message for debugging
-                        Log.e("FirebaseStorage", "Image retrieval failed: ${exception.message}")
-                        // Handle any errors, e.g., set a default image
-                        rootView.eventImage.setImageResource(R.drawable.default_image)
-                    }
-                }
-            }
+            Utility.setImage(eventos[position].image, rootView.eventImage, requireContext())
 
             rootView.root.setOnClickListener {
-
-                val selectedEvento = eventos[position]
-                val imageBitmap = imageCache[selectedEvento.image]
-                if (imageBitmap != null) {
-                    val stream = ByteArrayOutputStream()
-                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                    val imageByteArray = stream.toByteArray()
-
                     val bundle = Bundle().apply {
                         putString("description", eventos[position].description)
                         putString("imgDescription", eventos[position].imgDescription)
-                        putByteArray("image", imageByteArray)
+                        putString("image", eventos[position].image)
                     }
-                    findNavController().navigate(R.id.eventDetail, bundle)
-                }
+                    findNavController().navigate(R.id.action_eventFragment_to_eventDetail, bundle)
+
             }
 
             return rootView.root

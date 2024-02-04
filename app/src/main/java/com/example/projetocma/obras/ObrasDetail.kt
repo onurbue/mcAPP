@@ -34,6 +34,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import models.Obras
+import models.Utility
 import java.util.Locale
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -43,23 +44,20 @@ class ObrasDetail : Fragment() {
     private  var _binding: FragmentObrasDetailBinding? = null
     private lateinit var textToSpeech: TextToSpeech
     var title: String? = null
-    var imageResId: ByteArray? = null
     var pathToImage: String? = null
     var description: String? = null
     var imgDescription: String? = null
     var obraId: String? = null
     var museuId: String? = null
-     var decodedBitmap : Bitmap? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = arguments?.getString("name")
-        imageResId = arguments?.getByteArray("image")
         description = arguments?.getString("description")
         imgDescription = arguments?.getString("imgDescription")
         obraId = arguments?.getString("obraId")
         museuId = arguments?.getString("museuId")
-        decodedBitmap = imageResId?.let { BitmapFactory.decodeByteArray(imageResId, 0, it.size) }
+        pathToImage = arguments?.getString("image")
     }
 
     override fun onDestroyView() {
@@ -102,11 +100,11 @@ class ObrasDetail : Fragment() {
                 description = obra.description
                 imgDescription = obra.imgDescription
 
-                setImage(pathToImage, binding.obrasImg, requireContext())
-                showDialog(imgDescription, decodedBitmap, description, title, pathToImage)
+                Utility.setImage(pathToImage, binding.obrasImg, requireContext())
+                showDialog(imgDescription, description, title, pathToImage)
 
                 binding.obrasImg.setOnClickListener {
-                    showDialog(imgDescription, decodedBitmap, description, title, pathToImage)
+                    showDialog(imgDescription, description, title, pathToImage)
                 }
 
             }
@@ -120,13 +118,11 @@ class ObrasDetail : Fragment() {
             }
         }
         else{
-            imageResId?.let {
-                binding.obrasImg.setImageBitmap(decodedBitmap)
-            }
-            showDialog(imgDescription, decodedBitmap, description, title)
+            Utility.setImage(pathToImage, binding.obrasImg, requireContext())
+            showDialog(imgDescription, description, title, pathToImage)
 
             binding.obrasImg.setOnClickListener {
-                showDialog(imgDescription, decodedBitmap, description, title)
+                showDialog(imgDescription, description, title, pathToImage)
             }
 
             binding.setaBackk.setOnClickListener {
@@ -146,10 +142,9 @@ class ObrasDetail : Fragment() {
 
     private fun showDialog(
         imgDescription: String?,
-        imageBitmap: Bitmap? = null,
         description: String?,
         name: String?,
-        pathToImage: String? = null
+        pathToImage: String?
     ) {
         val dialog: Dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -170,11 +165,7 @@ class ObrasDetail : Fragment() {
             }
         }
 
-        if (imageBitmap != null) {
-            bottomSheetImageView.setImageBitmap(imageBitmap)
-        } else {
-            setImage(pathToImage, bottomSheetImageView, requireContext())
-        }
+            Utility.setImage(pathToImage, bottomSheetImageView, requireContext())
 
         bottomSheetDescription.text = description
         bottomSheetImgDescription.text = imgDescription
@@ -196,20 +187,7 @@ class ObrasDetail : Fragment() {
         dialog.window?.setGravity(Gravity.BOTTOM)
     }
 
-    fun setImage(pathToImage: String?, imageView: ImageView, context: Context) {
-        pathToImage?.let { imagePath ->
-            // Load the image from Firebase Storage
-            val storage = Firebase.storage
-            val storageRef = storage.reference
-            val pathReference = storageRef.child(imagePath)
-            pathReference.downloadUrl.addOnSuccessListener { uri ->
-                Glide.with(context)
-                    .load(uri)
-                    .into(imageView)
-            }.addOnFailureListener {
-            }
-        }
-    }
+
 
 
 

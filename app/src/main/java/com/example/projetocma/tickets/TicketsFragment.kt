@@ -1,5 +1,6 @@
 package com.example.projetocma.tickets
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentTicketsBinding
@@ -17,8 +19,10 @@ import com.example.projetocma.room.AppDatabase
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.ktx.storage
+import models.Eventos
 import models.Obras
 import models.Tickets
+import models.Utility
 import java.io.ByteArrayOutputStream
 import java.util.Date
 
@@ -26,10 +30,14 @@ class TicketsFragment : Fragment() {
     private var _binding: FragmentTicketsBinding? = null
     var tickets = arrayListOf<Tickets>()
     private var adpapter = TicketsAdapter()
-    private val imageCache = mutableMapOf<String, Bitmap?>()
     private var museuId: String? = null
 
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        museuId = arguments?.getString("museuId")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,25 +53,20 @@ class TicketsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val appDatabase = AppDatabase.getDatabase(requireContext())
 
-        museuId = arguments?.getString("museuId")
+
         binding.listView.adapter = adpapter
 
 
 
-        if (!appDatabase?.ticketsCompradosDao()?.hasAnyRecord()!!) {
-            Tickets.fetchTickets(museuId!!) {
+        if(appDatabase != null){
+            Tickets.fetchTickets(museuId!!){
                 appDatabase.ticketsDao().insertTicketsList(it)
             }
-            val localTickets = appDatabase.ticketsDao().getAll()
-            tickets.clear()
-            tickets.addAll(localTickets)
-
-        }else{
-            val localTickets = appDatabase.ticketsDao().getAll()
-            tickets.clear()
-            tickets.addAll(localTickets)
+            appDatabase.ticketsDao().getAll().observe(viewLifecycleOwner, Observer {
+                tickets = it as ArrayList<Tickets>
+                adpapter.notifyDataSetChanged()
+            })
         }
-        adpapter.notifyDataSetChanged()
 
         binding.setaBackk.setOnClickListener {
             findNavController().popBackStack()
@@ -85,6 +88,7 @@ class TicketsFragment : Fragment() {
             return 0
         }
 
+        @SuppressLint("SetTextI18n")
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val rootView: TicketGridItemBinding
 
@@ -96,52 +100,22 @@ class TicketsFragment : Fragment() {
             rootView.ticketName.text = tickets[position].name
             rootView.ticketPrice.text = tickets[position].price + "€"
 
-            tickets[position].pathToImg?.let { imagePath ->
-                if (imageCache.containsKey(imagePath)) {
-                    // Image is in cache, reuse it
-                    rootView.ticketImg.setImageBitmap(imageCache[imagePath])
-                } else {
-                    // Image not in cache, retrieve it from Firebase Storage
-                    val storage = com.google.firebase.ktx.Firebase.storage
-                    val storageRef = storage.reference
-                    val pathReference = storageRef.child(imagePath)
-                    val ONE_MEGABYTE: Long = 10 * 1024 * 1024
-
-                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener { data ->
-                        val bitmap = BitmapFactory.decodeByteArray(data, 0, data.count())
-                        rootView.ticketImg.setImageBitmap(bitmap)
-
-                        // Cache the retrieved image
-                        imageCache[imagePath] = bitmap
-                    }.addOnFailureListener { exception ->
-                        // Log the exception message for debugging
-                        Log.e("FirebaseStorage", "Image retrieval failed: ${exception.message}")
-                        // Handle any errors, e.g., set a default image
-                        rootView.ticketImg.setImageResource(R.drawable.default_image)
-                    }
-                }
-            }
+            Utility.setImage(tickets[position].pathToImg, rootView.ticketImg, requireContext())
 
             rootView.root.setOnClickListener {
                 val selectedTicket = tickets[position]
-                val imageBitmap = imageCache[selectedTicket.pathToImg]
-                if (imageBitmap != null) {
-                    val stream = ByteArrayOutputStream()
-                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                    val imageByteArray = stream.toByteArray()
+
 
                     val bundle = Bundle().apply {
                         putString("name", selectedTicket.name)
                         putString("pathToImage", selectedTicket.pathToImg)
-                        putByteArray("image", imageByteArray)
                         putString("description", selectedTicket.description)
                         putString("ticketId", tickets[position].id)
                         putString("price", tickets[position].price)
                         putString("museuId", museuId)
                     }
-                    findNavController().navigate(R.id.calendario, bundle)
+                    findNavController().navigate(R.id.action_fragmentTickets_to_calendario, bundle)
                 }
-            }
 
 
             return rootView.root

@@ -1,20 +1,18 @@
 package com.example.projetocma.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import models.Museu
 
 @Dao
 interface MuseuDAO {
 
-    @Insert
-    fun insertMuseu(museu: Museu)
-    @Insert
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insertMuseuList(museus: List<Museu>)
     @Query("SELECT * FROM museu")
-    fun getAll(): List<Museu>
+    fun getAll(): LiveData<List<Museu>>
 
-    @Query("SELECT COUNT(*) FROM museu LIMIT 1")
-    fun hasAnyRecord(): Boolean
 }

@@ -20,6 +20,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentHistoriaMuseuBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mapbox.maps.extension.style.expressions.dsl.generated.image
+import models.Utility
 import java.util.Locale
 
 
@@ -29,8 +31,15 @@ class HistoriaMuseu : Fragment() {
     private val binding get() = _binding!!
     private lateinit var textToSpeech: TextToSpeech
 
+    private var name: String? = null
+    private var imagePath: String? = null
+    private var description: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        name = arguments?.getString("name")
+        imagePath = arguments?.getString("image")
+        description = arguments?.getString("description")
     }
 
     override fun onCreateView(
@@ -43,23 +52,16 @@ class HistoriaMuseu : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val name = arguments?.getString("name")
-        val imageResId = arguments?.getByteArray("image")
-        val description = arguments?.getString("description")
 
         val navView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navView.visibility = View.GONE
 
-        val decodedBitmap = BitmapFactory.decodeByteArray(imageResId, 0, imageResId!!.size)
+        Utility.setImage(imagePath, binding.historiaImage, requireContext())
 
-        imageResId?.let {
-            binding.historiaImage.setImageBitmap(decodedBitmap)
-        }
-
-        showDialog(name, decodedBitmap, description)
+        showDialog(name, imagePath, description)
 
         binding.historiaImage.setOnClickListener {
-            showDialog(name, decodedBitmap, description)
+            showDialog(name, imagePath, description)
         }
 
         binding.setaBackk.setOnClickListener {
@@ -71,7 +73,7 @@ class HistoriaMuseu : Fragment() {
         }
     }
 
-    private fun showDialog(name: String?,  imageBitmap: Bitmap?, description: String?) {
+    private fun showDialog(name: String?,  imagePath: String?, description: String?) {
         val dialog: Dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.fragment_historia_bottom_sheet)
@@ -90,9 +92,7 @@ class HistoriaMuseu : Fragment() {
             }
         }
 
-        imageBitmap?.let {
-            bottomSheetImageView.setImageBitmap(imageBitmap)
-        }
+        Utility.setImage(imagePath, bottomSheetImageView, requireContext())
         bottomSheetDescription.text = description
         bottomSheetName.text = name
 

@@ -20,8 +20,17 @@ import com.google.firebase.firestore.firestore
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
+import models.Museu
+import models.Utility
 
 class MuseuDetail : Fragment() {
+
+    private var name: String? = null
+    private var description: String? = null
+    private var imagePath: String? = null
+    private var museuId: String? = null
+    private var latitude: Double? = null
+    private var longitude: Double? = null
 
     private var _binding: FragmentMuseuDetailBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +40,12 @@ class MuseuDetail : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MapboxOptions.accessToken = "pk.eyJ1IjoibWFudWNhMTciLCJhIjoiY2xyMWQ2Z2l1MDEwYjJsbW1zZjF6cGVkMiJ9.oxptdQODQ7e_wqemar23Bw"
+         name = arguments?.getString("name")
+         description = arguments?.getString("description")
+         imagePath = arguments?.getString("image")
+         museuId = arguments?.getString("museuId")
+         latitude = arguments?.getDouble("latitude")
+         longitude = arguments?.getDouble("longitude")
 
     }
 
@@ -40,52 +55,33 @@ class MuseuDetail : Fragment() {
     ): View? {
         _binding = FragmentMuseuDetailBinding.inflate(inflater, container, false)
         mapView = binding.appCompatImageView2
-
-
         val navBar =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
 
-        // Retrieve arguments
-        val name = arguments?.getString("name")
-        val description = arguments?.getString("description")
-        val imageByteArray = arguments?.getByteArray("image")
-        val museuId = arguments?.getString("museuId")
-        val latitude = arguments?.getDouble("latitude")
-        val longitude = arguments?.getDouble("longitude")
-        updateQuantityClicked(museuId!!)
+        Museu.updateQuantityClicked(museuId!!)
         binding.textViewMuseumName.text = name
-
-        configMap(latitude,longitude,mapView)
-
-        if (imageByteArray != null) {
-            val bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
-            binding.museumImage.setImageBitmap(bitmap)
-        } else {
-            binding.museumImage.setImageResource(R.drawable.default_image)
-        }
-
-
-
+        Utility.configMap(latitude,longitude,mapView)
+        Utility.setImage(imagePath, binding.museumImage, requireContext())
 
         binding.historiaButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("name", name)
-            bundle.putByteArray("image", imageByteArray)
+            bundle.putString("image", imagePath)
             bundle.putString("description", description)
 
-            findNavController().navigate(R.id.historiaMuseu, bundle)
+            findNavController().navigate(R.id.action_museuDetail_to_historiaMuseu, bundle)
         }
         binding.obrasButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("museuId", museuId)
-            findNavController().navigate(R.id.obrasExplore, bundle)
+            findNavController().navigate(R.id.action_museuDetail_to_obrasExplore, bundle)
         }
 
         binding.eventosButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("museuId", museuId)
-            findNavController().navigate(R.id.eventFragment, bundle)
+            findNavController().navigate(R.id.action_museuDetail_to_eventFragment, bundle)
         }
         binding.setaBack.setOnClickListener {
             findNavController().popBackStack()
@@ -97,7 +93,7 @@ class MuseuDetail : Fragment() {
             }else{
                 val bundle = Bundle()
                 bundle.putString("museuId", museuId)
-                findNavController().navigate(R.id.fragmentTickets, bundle)
+                findNavController().navigate(R.id.action_museuDetail_to_fragmentTickets, bundle)
             }
 
         }
@@ -106,17 +102,7 @@ class MuseuDetail : Fragment() {
 
     }
 
-    private fun configMap(latitude: Double?, longitude: Double?, mapView: MapView) {
 
-        mapView.mapboxMap.setCamera(
-            CameraOptions.Builder()
-                .center(com.mapbox.geojson.Point.fromLngLat(longitude!!, latitude!!))
-                .pitch(3.0)
-                .zoom(15.0)
-                .bearing(0.0)
-                .build()
-        )
-    }
 
     private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -127,16 +113,5 @@ class MuseuDetail : Fragment() {
         _binding = null // Set the binding to null to release resources
     }
 
-    fun updateQuantityClicked(museuId: String){
-        val db = Firebase.firestore
-
-        db.collection("museus").document(museuId)
-            .update("quantityClicked", FieldValue.increment(1))
-            .addOnSuccessListener { documentReference ->
-                Log.d("quantity", "Quantity updated successfully!")
-            }
-            .addOnFailureListener { e ->
-            }
-    }
 
 }

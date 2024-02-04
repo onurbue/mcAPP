@@ -15,14 +15,21 @@ import models.User
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var binding: FragmentRegisterFragmentBinding
+    private  var _binding: FragmentRegisterFragmentBinding? = null
     private lateinit var auth: FirebaseAuth
+
+    private val binding get() = _binding!!
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRegisterFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterFragmentBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
         val db = Firebase.firestore
 
@@ -55,7 +62,7 @@ class RegisterFragment : Fragment() {
                                 Log.w("RegisterFragment", "addUser:failure", e)
                             }
 
-                        findNavController().navigate(R.id.loginFragment)
+                        findNavController().navigate(R.id.action_register_fragment_to_loginFragment)
                     } else {
                         Log.w("RegisterFragment", "createUserWithEmail:failure", task.exception)
                     }

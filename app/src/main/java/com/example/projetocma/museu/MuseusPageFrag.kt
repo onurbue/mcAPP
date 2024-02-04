@@ -52,16 +52,15 @@ class MuseusPageFrag : Fragment() {
         // Set up click listener for the button
         binding.exploreButton.setOnClickListener {
             // Navigate to the destination fragment
-            findNavController().navigate(R.id.museusExplore)
+            findNavController().navigate(R.id.action_museusPageFrag_to_museusExplore)
             val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
             navBar.menu.findItem(R.id.home).isChecked = true
 
         }
         binding.qrCodeButton.setOnClickListener {
             // Navigate to the destination fragment
-            findNavController().navigate(R.id.qrCode)
-            val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-            navBar.menu.findItem(R.id.qrCode).isChecked = true
+            findNavController().navigate(R.id.action_museusPageFrag_to_qrCode)
+
         }
     }
 

@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import models.Tickets
 import models.TicketsComprados
+import models.Utility
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,8 +31,24 @@ class TicketBasic : Fragment() {
     private lateinit var binding: FragmentTicketBasiccBinding
     val randomUid: String = UUID.randomUUID().toString()
     var userId = Firebase.auth.currentUser?.uid
+    var selectedDate: Date? = null
+    var name : String? = null
+    var description : String? = null
+    var price : String? = null
+    var pathToImage : String? = null
+    var museuId : String? = null
+    var ticketId : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+         name = arguments?.getString("name")
+         description = arguments?.getString("description")
+         pathToImage = arguments?.getString("image")
+         price = arguments?.getString("price")
+         pathToImage = arguments?.getString("pathToImage")
+         selectedDate = arguments?.getSerializable("selectedDate") as? Date
+         museuId = arguments?.getString("museuId")
+         ticketId = arguments?.getString("ticketId")
 
     }
 
@@ -42,16 +59,7 @@ class TicketBasic : Fragment() {
         var quantity = 1
         binding = FragmentTicketBasiccBinding.inflate(inflater, container, false)
 
-        val name = arguments?.getString("name")
-        val description = arguments?.getString("description")
-        val image = arguments?.getByteArray("image")
-        val price = arguments?.getString("price")
-        val pathToImage = arguments?.getString("pathToImage")
-        val selectedDate: Date? = arguments?.getSerializable("selectedDate") as? Date
-        val museuId = arguments?.getString("museuId")
-        val ticketId = arguments?.getString("ticketId")
-        Log.d("ticketid", ticketId!!)
-        Log.d("museuId", museuId!!)
+
 
         val initialPrice = price!!.toInt()
 
@@ -78,12 +86,7 @@ class TicketBasic : Fragment() {
             binding.ticketNamesPrice.text = updatedPrice.toString() + "€"
         }
 
-        if (image != null) {
-            val bitmap = BitmapFactory.decodeByteArray(image, 0, image.size)
-            binding.ticketImg.setImageBitmap(bitmap)
-        } else {
-            binding.ticketImg.setImageResource(R.drawable.default_image)
-        }
+        Utility.setImage(pathToImage, binding.ticketImg, requireContext())
 
             val formattedDate = SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(selectedDate)
             binding.data.text = formattedDate
@@ -113,11 +116,11 @@ class TicketBasic : Fragment() {
 
                 Tickets.addTicket(ticketMap)
 
-                 Tickets.updateTicketBought(museuId, ticketId)
+                 Tickets.updateTicketBought(museuId!!, ticketId!!)
             }
 
             showToast("O pagamento foi bem sucedido")
-            findNavController().navigate(R.id.museusExplore)
+            findNavController().navigate(R.id.action_ticketBasicc_to_museusPageFrag)
 
         }
 

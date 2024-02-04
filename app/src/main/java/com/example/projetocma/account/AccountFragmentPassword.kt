@@ -31,7 +31,7 @@ class AccountFragmentPassword : Fragment() {
 
 
         binding.backIconePassword.setOnClickListener {
-            findNavController().navigate(R.id.accountFragment)
+            findNavController().popBackStack()
         }
 
         binding.guardar.setOnClickListener {
@@ -44,7 +44,7 @@ class AccountFragmentPassword : Fragment() {
                             Log.d(TAG, "User password updated.")
                         }
                     }
-                findNavController().navigate(R.id.accountFragment)
+                findNavController().navigate(R.id.action_accountPassword_to_accountFragment)
                 showToast("A palavra passe foi alterada com sucesso")
             } else {
                 showToast("A palavra passe não coincide")

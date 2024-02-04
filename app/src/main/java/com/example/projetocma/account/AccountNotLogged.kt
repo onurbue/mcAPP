@@ -12,7 +12,13 @@ import com.example.projetocma.databinding.FragmentAccountNotLoggedBinding
 
 class AccountNotLogged : Fragment() {
 
-    private lateinit var binding: FragmentAccountNotLoggedBinding
+    private  var _binding: FragmentAccountNotLoggedBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +28,10 @@ class AccountNotLogged : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAccountNotLoggedBinding.inflate(layoutInflater)
+        _binding = FragmentAccountNotLoggedBinding.inflate(layoutInflater)
 
         binding.constrainMetodoPagamento1.setOnClickListener {
-            findNavController().navigate(R.id.loginFragment)
+            findNavController().navigate(R.id.action_accountNotLogged_to_loginFragment)
         }
         return binding.root
     }

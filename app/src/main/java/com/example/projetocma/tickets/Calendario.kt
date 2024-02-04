@@ -17,7 +17,25 @@ class Calendario : Fragment() {
     private val binding get() = _binding!!
 
     private var selectedDate: Date? = null
+    var name : String? = null
+    var description : String? = null
+    var price : String? = null
+    var pathToImage : String? = null
+    var museuId : String? = null
+    var ticketId : String? = null
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+         name = arguments?.getString("name")
+         description = arguments?.getString("description")
+         price = arguments?.getString("price")
+         pathToImage = arguments?.getString("pathToImage")
+         museuId = arguments?.getString("museuId")
+         ticketId = arguments?.getString("ticketId")
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,31 +58,19 @@ class Calendario : Fragment() {
             val dateFormat = java.text.SimpleDateFormat("dd MMMM yyyy", locale)
             selectedDate = calendar.time
             val date = dateFormat.format(calendar.time)
-
-            // Você pode realizar qualquer ação com a data selecionada aqui
         }
 
         binding.buttonNextEvent.setOnClickListener {
-            val name = arguments?.getString("name")
-            val imageResId = arguments?.getByteArray("image")
-            val description = arguments?.getString("description")
-            val price = arguments?.getString("price")
-            val pathToImage = arguments?.getString("pathToImage")
-            val museuId = arguments?.getString("museuId")
-            val ticketId = arguments?.getString("ticketId")
-            Log.d("museuId", museuId!!)
-            Log.d("ticketid", ticketId!!)
             val bundle = Bundle()
             bundle.putSerializable("selectedDate", selectedDate)
             bundle.putString("name", name)
-            bundle.putByteArray("image", imageResId)
             bundle.putString("description", description)
             bundle.putString("price", price)
             bundle.putString("pathToImage", pathToImage)
             bundle.putString("museuId",museuId)
             bundle.putString("ticketId", ticketId)
 
-            findNavController().navigate(R.id.ticketBasicc, bundle)
+            findNavController().navigate(R.id.action_calendario_to_ticketBasicc, bundle)
         }
 
         binding.buttonBackEvent.setOnClickListener {

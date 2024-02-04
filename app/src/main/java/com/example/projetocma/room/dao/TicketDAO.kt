@@ -1,19 +1,17 @@
 package com.example.projetocma.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import models.Obras
 import models.Tickets
 @Dao
 interface TicketDAO {
-    @Insert
-    fun insertTicket(tickets: Tickets)
-    @Insert
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insertTicketsList(tickets: List<Tickets>)
     @Query("SELECT * FROM tickets")
-    fun getAll(): List<Tickets>
+    fun getAll(): LiveData<List<Tickets>>
 
-    @Query("SELECT COUNT(*) FROM tickets LIMIT 1")
-    fun hasAnyRecord(): Boolean
 }

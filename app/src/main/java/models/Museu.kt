@@ -13,6 +13,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.projetocma.R
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import org.checkerframework.checker.nullness.qual.NonNull
@@ -91,6 +92,18 @@ data class Museu(
                         }
                         callback(museums)
                     }
+                }
+        }
+
+        fun updateQuantityClicked(museuId: String){
+            val db = Firebase.firestore
+
+            db.collection("museus").document(museuId)
+                .update("quantityClicked", FieldValue.increment(1))
+                .addOnSuccessListener { documentReference ->
+                    Log.d("quantity", "Quantity updated successfully!")
+                }
+                .addOnFailureListener { e ->
                 }
         }
 

@@ -1,7 +1,5 @@
 package com.example.projetocma.museu
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,18 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.PopupMenu
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseusExploreBinding
 import com.example.projetocma.databinding.GridItemBinding
 import com.example.projetocma.room.AppDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.firestore
-import com.google.firebase.storage.ktx.storage
 import models.Museu
-import java.io.ByteArrayOutputStream
+import models.Utility
 
 
 class MuseusExplore : Fragment() {
@@ -30,8 +25,6 @@ class MuseusExplore : Fragment() {
     private val binding get() = _binding!!
     var museus = mutableListOf<Museu>()
     private var adpapter = MuseusAdapter()
-    private val imageCache = mutableMapOf<String, Bitmap?>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,23 +50,15 @@ class MuseusExplore : Fragment() {
         navBar.visibility = View.VISIBLE
 
         val appDatabase = AppDatabase.getDatabase(requireContext())
-
-
-        if (!appDatabase?.museuDao()?.hasAnyRecord()!!) {
-            Museu.fetchMuseums { fetchedMuseums ->
-                appDatabase.museuDao().insertMuseuList(fetchedMuseums)
+        if(appDatabase != null){
+            Museu.fetchMuseums {
+                appDatabase.museuDao().insertMuseuList(it)
             }
-            val localMuseums = appDatabase.museuDao().getAll()
-            museus.clear()
-            museus.addAll(localMuseums)
-        }else{
-            val localMuseums = appDatabase.museuDao().getAll()
-            museus.clear()
-            museus.addAll(localMuseums)
-
+            appDatabase.museuDao().getAll().observe(viewLifecycleOwner, Observer {
+                museus = it.toMutableList()
+                adpapter.notifyDataSetChanged()
+            })
         }
-        adpapter.notifyDataSetChanged()
-
     }
 
 
@@ -103,94 +88,67 @@ class MuseusExplore : Fragment() {
 
             Log.d("FirebaseStorage", "Image Path: ${museus[position].image}")
 
-            museus[position].image?.let { imagePath ->
-                if (imageCache.containsKey(imagePath)) {
-                    // Image is in cache, reuse it
-                    rootView.gridImage.setImageBitmap(imageCache[imagePath])
-                } else {
-                    // Image not in cache, retrieve it from Firebase Storage
-                    val storage = com.google.firebase.ktx.Firebase.storage
-                    val storageRef = storage.reference
-                    val pathReference = storageRef.child(imagePath)
-                    val ONE_MEGABYTE: Long = 10 * 1024 * 1024
 
-                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener { data ->
-                        val bitmap = BitmapFactory.decodeByteArray(data, 0, data.count())
-                        rootView.gridImage.setImageBitmap(bitmap)
+            Utility.setImage(museus[position].image, rootView.gridImage, requireContext())
 
-                        // Cache the retrieved image
-                        imageCache[imagePath] = bitmap
-                    }.addOnFailureListener { exception ->
-                        // Log the exception message for debugging
-                        Log.e("FirebaseStorage", "Image retrieval failed: ${exception.message}")
-                        // Handle any errors, e.g., set a default image
-                        rootView.gridImage.setImageResource(R.drawable.default_image)
+            rootView.root.setOnClickListener {
+                val selectedMuseu = museus[position]
+
+                    val bundle = Bundle().apply {
+                        putString("name", selectedMuseu.name)
+                        putString("image", selectedMuseu.image)
+                        putString("description", selectedMuseu.description)
+                        putString("museuId", museus[position].id)
+                        putDouble("latitude", museus[position].latitude)
+                        putDouble("longitude", museus[position].longitude)
                     }
-                }
+
+                    findNavController().navigate(R.id.action_museusExplore_to_museuDetail, bundle)
+
             }
 
+            return rootView.root
 
-                rootView.root.setOnClickListener {
-                    val selectedMuseu = museus[position]
-                    val imageBitmap = imageCache[selectedMuseu.image]
-                    if (imageBitmap != null) {
-                        val stream = ByteArrayOutputStream()
-                        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        val imageByteArray = stream.toByteArray()
+        }
+    }
 
-                        val bundle = Bundle().apply {
-                            putString("name", selectedMuseu.name)
-                            putByteArray("image", imageByteArray)
-                            putString("description", selectedMuseu.description)
-                            putString("museuId", museus[position].id)
-                            putDouble("latitude", museus[position].latitude)
-                            putDouble("longitude", museus[position].longitude)
-                        }
+        private fun showCategoryMenu(anchorView: View) {
+            val popupMenu = PopupMenu(requireContext(), anchorView)
+            popupMenu.menuInflater.inflate(R.menu.categorias_menu, popupMenu.menu)
 
-                        findNavController().navigate(R.id.museuDetail, bundle)
+            // Set a click listener for each menu item
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_category_art -> filterMuseumsByCategory("Arte")
+                    R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
+                    R.id.menu_category_none -> Museu.fetchMuseums {
+                        museus.clear()
+                        museus.addAll(it)
+                        this.adpapter.notifyDataSetChanged()
                     }
+                    // Add more categories as needed
                 }
-
-                return rootView.root
+                true
             }
 
+            // Show the popup menu
+            popupMenu.show()
         }
-    private fun showCategoryMenu(anchorView: View) {
-        val popupMenu = PopupMenu(requireContext(), anchorView)
-        popupMenu.menuInflater.inflate(R.menu.categorias_menu, popupMenu.menu)
 
-        // Set a click listener for each menu item
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_category_art -> filterMuseumsByCategory("Arte")
-                R.id.menu_category_history -> filterMuseumsByCategory("Cultura")
-                R.id.menu_category_none ->  Museu.fetchMuseums {
-                    museus.clear()
-                    museus.addAll(it)
-                    this.adpapter.notifyDataSetChanged()}
-                // Add more categories as needed
+        private fun filterMuseumsByCategory(category: String) {
+            Museu.getMuseumsByCategory(category) { filteredMuseums ->
+                museus = ArrayList(filteredMuseums)
+                adpapter.notifyDataSetChanged()
             }
-            true
         }
 
-        // Show the popup menu
-        popupMenu.show()
-    }
 
-    private fun filterMuseumsByCategory(category: String) {
-        Museu.getMuseumsByCategory(category) { filteredMuseums ->
-            museus = ArrayList(filteredMuseums)
-            adpapter.notifyDataSetChanged()
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null // Set the binding to null to release resources
         }
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null // Set the binding to null to release resources
-    }
 
 
 
-    }
+}
 

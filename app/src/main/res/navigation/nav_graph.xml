@@ -12,8 +12,15 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
+            android:id="@+id/action_loginFragment_to_museusPageFrag"
+            app:destination="@id/museusPageFrag"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
             android:id="@+id/action_loginFragment_to_register_fragment"
-            app:destination="@id/register_fragment" />
+            app:destination="@id/register_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/register_fragment"
@@ -22,7 +29,9 @@
         tools:layout="@layout/fragment_register_fragment">
         <action
             android:id="@+id/action_register_fragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/museusPageFrag"
@@ -30,11 +39,15 @@
         android:label="fragment_museus_page"
         tools:layout="@layout/fragment_museus_page">
         <action
-            android:id="@+id/action_museusPageFrag_to_qrCode"
-            app:destination="@id/qrCode" />
+            android:id="@+id/action_museusPageFrag_to_museusExplore"
+            app:destination="@id/museusExplore"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
-            android:id="@+id/action_museusPageFrag_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_museusPageFrag_to_qrCode"
+            app:destination="@id/qrCode"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/qrCode"
@@ -52,7 +65,13 @@
         android:id="@+id/accountPassword"
         android:name="com.example.projetocma.account.AccountFragmentPassword"
         android:label="fragment_account_password"
-        tools:layout="@layout/fragment_account_password" />
+        tools:layout="@layout/fragment_account_password" >
+        <action
+            android:id="@+id/action_accountPassword_to_accountFragment"
+            app:destination="@id/accountFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/accountTickets"
         android:name="com.example.projetocma.account.AccountFragmentTickets"
@@ -60,7 +79,9 @@
         tools:layout="@layout/fragment_account_tickets" >
         <action
             android:id="@+id/action_accountTickets_to_ticketInfo"
-            app:destination="@id/ticketInfo" />
+            app:destination="@id/ticketInfo"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/museusExplore"
@@ -70,7 +91,9 @@
         tools:layout="@layout/fragment_museus_explore" >
         <action
             android:id="@+id/action_museusExplore_to_museuDetail"
-            app:destination="@id/museuDetail" />
+            app:destination="@id/museuDetail"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/museuDetail"
@@ -78,17 +101,25 @@
         android:label="fragment_museu_detail"
         tools:layout="@layout/fragment_museu_detail">
         <action
-            android:id="@+id/action_museuDetail_to_eventFragment"
-            app:destination="@id/eventFragment" />
-        <action
-            android:id="@+id/action_museuDetail_to_fragmentTickets"
-            app:destination="@id/fragmentTickets" />
-        <action
             android:id="@+id/action_museuDetail_to_historiaMuseu"
-            app:destination="@id/historiaMuseu" />
+            app:destination="@id/historiaMuseu"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_museuDetail_to_eventFragment"
+            app:destination="@id/eventFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_museuDetail_to_obrasExplore"
-            app:destination="@id/obrasExplore" />
+            app:destination="@id/obrasExplore"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_museuDetail_to_fragmentTickets"
+            app:destination="@id/fragmentTickets"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -96,11 +127,25 @@
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
-            android:id="@+id/action_accountFragment_to_accountPassword"
-            app:destination="@id/accountPassword" />
+            android:id="@+id/action_accountFragment_to_perfil"
+            app:destination="@id/perfil"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_accountFragment_to_accountTickets"
-            app:destination="@id/accountTickets" />
+            app:destination="@id/accountTickets"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_accountFragment_to_accountPassword"
+            app:destination="@id/accountPassword"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_accountFragment_to_museusPageFrag"
+            app:destination="@id/museusPageFrag"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
@@ -108,8 +153,10 @@
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
-            android:id="@+id/action_eventFragment_to_eventDetail2"
-            app:destination="@id/eventDetail" />
+            android:id="@+id/action_eventFragment_to_eventDetail"
+            app:destination="@id/eventDetail"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/calendario"
@@ -118,18 +165,16 @@
         tools:layout="@layout/fragment_calendario" >
         <action
             android:id="@+id/action_calendario_to_ticketBasicc"
-            app:destination="@id/ticketBasicc" />
+            app:destination="@id/ticketBasicc"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
         android:id="@+id/eventDetail"
         android:name="com.example.projetocma.eventos.EventDetail"
         android:label="fragment_event_detail"
-        tools:layout="@layout/fragment_event_detail">
-        <action
-            android:id="@+id/action_eventDetail_to_eventBottomSheet"
-            app:destination="@id/eventBottomSheet" />
-    </fragment>
+        tools:layout="@layout/fragment_event_detail"/>
 
     <fragment
         android:id="@+id/eventBottomSheet"
@@ -146,7 +191,9 @@
         tools:layout="@layout/fragment_tickets" >
         <action
             android:id="@+id/action_fragmentTickets_to_calendario"
-            app:destination="@id/calendario" />
+            app:destination="@id/calendario"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/ticketBasicc"
@@ -154,18 +201,16 @@
         android:label="fragment_ticket_basicc"
         tools:layout="@layout/fragment_ticket_basicc" >
         <action
-            android:id="@+id/action_ticketBasicc_to_museusExplore"
-            app:destination="@id/museusExplore" />
+            android:id="@+id/action_ticketBasicc_to_museusPageFrag"
+            app:destination="@id/museusPageFrag"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/historiaMuseu"
         android:name="com.example.projetocma.museu.HistoriaMuseu"
         android:label="fragment_historia_museu"
-        tools:layout="@layout/fragment_historia_museu" >
-        <action
-            android:id="@+id/action_historiaMuseu_to_historiaBottomSheet"
-            app:destination="@id/historiaBottomSheet" />
-    </fragment>
+        tools:layout="@layout/fragment_historia_museu" />
     <fragment
         android:id="@+id/historiaBottomSheet"
         android:name="com.example.projetocma.museu.historiaBottomSheet"
@@ -176,14 +221,16 @@
         android:name="com.example.projetocma.obras.ObrasExplore"
         android:label="fragment_obras_explore"
         tools:layout="@layout/fragment_obras_explore">
-        <action
-            android:id="@+id/action_obrasExplore_to_obrasDetail"
-            app:destination="@id/obrasDetail" />
         <argument
             android:name="teste12"
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_obrasExplore_to_obrasDetail"
+            app:destination="@id/obrasDetail"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
 
     </fragment>
     <fragment
@@ -192,9 +239,6 @@
         android:label="fragment_obras_detail"
         tools:layout="@layout/fragment_obras_detail">
 
-        <action
-            android:id="@+id/action_obrasDetail_to_obrasBottomSheet"
-            app:destination="@id/obrasBottomSheet" />
         <argument
             android:name="obraId"
             android:defaultValue="@null"
@@ -225,7 +269,13 @@
         android:id="@+id/accountNotLogged"
         android:name="com.example.projetocma.account.AccountNotLogged"
         android:label="fragment_account_not_logged"
-        tools:layout="@layout/fragment_account_not_logged" />
+        tools:layout="@layout/fragment_account_not_logged" >
+        <action
+            android:id="@+id/action_accountNotLogged_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
 
 
 </navigation>

@@ -20,13 +20,29 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentEventDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import models.Utility
 import java.util.Locale
 
 
 class EventDetail : Fragment() {
+    var pathToImage: String? = null
+    var description: String? = null
+    var imgDescription: String? = null
 
-    private lateinit var binding: FragmentEventDetailBinding
+    private  var _binding: FragmentEventDetailBinding? = null
     private lateinit var textToSpeech: TextToSpeech
+    private val binding get() = _binding!!
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pathToImage = arguments?.getString("image")
+        description = arguments?.getString("description")
+        imgDescription = arguments?.getString("imgDescription")
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,20 +51,12 @@ class EventDetail : Fragment() {
         val view = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         view.visibility = View.GONE
 
-        binding = FragmentEventDetailBinding.inflate(inflater, container, false)
-        val imageResId = arguments?.getByteArray("image")
-        val description = arguments?.getString("description")
-        val imgDescription = arguments?.getString("imgDescription")
-
-        val decodedBitmap = BitmapFactory.decodeByteArray(imageResId, 0, imageResId!!.size)
-
-        imageResId?.let {
-            binding.tecxt123.setImageBitmap(decodedBitmap)
-        }
+        _binding = FragmentEventDetailBinding.inflate(inflater, container, false)
 
 
+        Utility.setImage(pathToImage, binding.tecxt123, requireContext())
 
-            showDialog(imgDescription, decodedBitmap, description)
+            showDialog(imgDescription, pathToImage, description)
 
         binding.setaBackk.setOnClickListener {
             findNavController().popBackStack()
@@ -62,7 +70,7 @@ class EventDetail : Fragment() {
         return binding.root
     }
 
-    private fun showDialog(imgDescription: String?,  imageBitmap: Bitmap?, description: String?) {
+    private fun showDialog(imgDescription: String?,  imagePath: String?, description: String?) {
         val dialog: Dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.fragment_event_bottom_sheet)
@@ -81,9 +89,7 @@ class EventDetail : Fragment() {
             }
         }
 
-        imageBitmap?.let {
-            bottomSheetImageView.setImageBitmap(imageBitmap)
-        }
+        Utility.setImage(imagePath, bottomSheetImageView, requireContext())
         bottomSheetDescription.text = description
         bottomSheetImgDescription.text = imgDescription
 

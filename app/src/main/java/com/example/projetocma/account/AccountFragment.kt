@@ -41,19 +41,19 @@ class AccountFragment : Fragment() {
 
         binding.constrainMetodoPagamento1.setOnClickListener {
             auth.signOut()
-            findNavController().navigate(R.id.museusPageFrag)
+            findNavController().navigate(R.id.action_accountFragment_to_museusPageFrag)
         }
 
         binding.constraintContacto.setOnClickListener {
-            findNavController().navigate(R.id.perfil)
+            findNavController().navigate(R.id.action_accountFragment_to_perfil)
         }
 
         binding.constraintMudarPassword.setOnClickListener {
-            findNavController().navigate(R.id.accountPassword)
+            findNavController().navigate(R.id.action_accountFragment_to_accountPassword)
         }
 
         binding.constrainMetodoPagamento.setOnClickListener {
-            findNavController().navigate(R.id.accountTickets)
+            findNavController().navigate(R.id.action_accountFragment_to_accountTickets)
         }
 
         return binding.root

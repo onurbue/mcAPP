@@ -19,19 +19,26 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
+    private  var _binding: FragmentLoginBinding? = null
     private lateinit var auth: FirebaseAuth
+
+    private val binding get() = _binding!!
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         auth = Firebase.auth
 
         binding.notRegiste.setOnClickListener {
-            findNavController().navigate(R.id.register_fragment)
+            findNavController().navigate(R.id.action_loginFragment_to_register_fragment)
         }
 
         binding.ButtonLogin.setOnClickListener {
@@ -43,7 +50,7 @@ class LoginFragment : Fragment() {
                         if (task.isSuccessful) {
                             Log.d(TAG, "signInWithEmail:success")
                             val user = auth.currentUser
-                            findNavController().navigate(R.id.museusPageFrag)
+                            findNavController().navigate(R.id.action_loginFragment_to_museusPageFrag)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
