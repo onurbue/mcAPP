@@ -38,5 +38,17 @@ abstract class Utility {
                     .build()
             )
         }
+
+         fun isValidEmail(email: String): Boolean {
+            return email.matches(Regex("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}"))
+        }
+
+         fun isValidUsername(username: String): Boolean {
+            return username.length in 6..16
+        }
+
+         fun isValidPhoneNumber(phoneNumber: String): Boolean {
+            return phoneNumber.length == 9
+        }
     }
 }

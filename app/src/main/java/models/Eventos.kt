@@ -24,7 +24,8 @@ data class Eventos(
     @ColumnInfo(name = "evento_image") var image: String,
     @ColumnInfo(name = "evento_date") var date: String,
     @ColumnInfo(name = "evento_description") var description: String,
-    @ColumnInfo(name = "evento_img_description")  var imgDescription: String?
+    @ColumnInfo(name = "evento_img_description")  var imgDescription: String?,
+    @ColumnInfo(name = "museu_id") var museuId: String? = null
 ) {
     companion object {
         fun fromSnapshot(id: String, snapshot: Map<String, Any>): Eventos {

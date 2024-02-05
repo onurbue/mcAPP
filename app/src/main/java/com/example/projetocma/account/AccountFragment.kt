@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentAccountBinding
+import com.example.projetocma.room.AppDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -41,6 +42,9 @@ class AccountFragment : Fragment() {
 
         binding.constrainMetodoPagamento1.setOnClickListener {
             auth.signOut()
+            val appDatabase = AppDatabase.getDatabase(requireContext())
+            appDatabase?.ticketsCompradosDao()?.clearAllData()
+
             findNavController().navigate(R.id.action_accountFragment_to_museusPageFrag)
         }
 

@@ -24,10 +24,8 @@ data class Obras(
     @ColumnInfo(name ="name_obra") var name: String ,
     @ColumnInfo(name = "image_obra") var image: String? ,
     @ColumnInfo(name ="description_obra")var description: String,
-    @ColumnInfo(name ="img_description_obra")var imgDescription: String
-
-
-
+    @ColumnInfo(name ="img_description_obra")var imgDescription: String,
+    @ColumnInfo(name = "museu_id")var museuId: String? = null
 ){
     constructor(): this("", "","","","")
     companion object{

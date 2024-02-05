@@ -13,7 +13,7 @@ interface EventosDAO {
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insertEventosList(eventos: List<Eventos>)
-    @Query("SELECT * FROM eventos")
-    fun getAll(): LiveData<List<Eventos>>
+    @Query("SELECT * FROM eventos WHERE museu_id = :museuId")
+    fun getMuseumEvents(museuId : String): LiveData<List<Eventos>>
 
 }

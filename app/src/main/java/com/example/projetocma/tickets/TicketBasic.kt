@@ -1,6 +1,7 @@
 package com.example.projetocma.tickets
 
 import android.content.ContentValues.TAG
+import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.widget.CompoundButtonCompat
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentTicketBasiccBinding
@@ -38,6 +42,7 @@ class TicketBasic : Fragment() {
     var pathToImage : String? = null
     var museuId : String? = null
     var ticketId : String? = null
+    var formattedPrice: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,6 +54,8 @@ class TicketBasic : Fragment() {
          selectedDate = arguments?.getSerializable("selectedDate") as? Date
          museuId = arguments?.getString("museuId")
          ticketId = arguments?.getString("ticketId")
+         formattedPrice = price + "€"
+
 
     }
 
@@ -57,15 +64,18 @@ class TicketBasic : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var quantity = 1
+        val buttonTint = ContextCompat.getColor(requireContext(), R.color.black)
         binding = FragmentTicketBasiccBinding.inflate(inflater, container, false)
+        CompoundButtonCompat.setButtonTintList(binding.checkbox, ColorStateList.valueOf(buttonTint))
 
 
 
         val initialPrice = price!!.toInt()
 
-        var formattedPrice = price + "€"
+
 
         binding.ticketPrice.text = formattedPrice
+        binding.ticketNamesPrice.text = price.toString() + '€'
         binding.ticketName.text = name
         binding.description.text = description
         binding.quantidade.text = quantity.toString()
@@ -91,10 +101,6 @@ class TicketBasic : Fragment() {
             val formattedDate = SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(selectedDate)
             binding.data.text = formattedDate
             binding.ticketNamesPrice.text = price
-
-        binding.metodopagamento.setOnClickListener {
-            showCategoryMenu(binding.metodopagamento)
-        }
 
 
 
@@ -136,12 +142,5 @@ class TicketBasic : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showCategoryMenu(anchorView: View) {
-        val popupMenu = PopupMenu(requireContext(), anchorView)
-        popupMenu.menuInflater.inflate(R.menu.metodo_pagamento, popupMenu.menu)
-
-
-        popupMenu.show()
-    }
 
 }

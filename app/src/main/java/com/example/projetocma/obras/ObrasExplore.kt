@@ -22,6 +22,7 @@ class ObrasExplore : Fragment() {
     private var _binding: FragmentObrasExploreBinding? = null
     private var adpapter = ObrasAdapter()
     var museuId: String? = null
+    var appDatabase : AppDatabase? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,15 +40,19 @@ class ObrasExplore : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val appDatabase = AppDatabase.getDatabase(requireContext())
+         appDatabase = AppDatabase.getDatabase(requireContext())
         binding.gridView.adapter = adpapter
 
 
         if(appDatabase != null){
             Obras.fetchObras(museuId){
-                appDatabase.obrasDao().insertObrasList(it)
+
+                val obrasWithMuseumId = it.map {
+                    it.copy(museuId = museuId)
+                }
+                appDatabase?.obrasDao()?.insertObrasList(obrasWithMuseumId)
             }
-            appDatabase.obrasDao().getAll().observe(viewLifecycleOwner, Observer {
+            appDatabase?.obrasDao()?.getMuseumObras(museuId!!)?.observe(viewLifecycleOwner, Observer {
                 obras = it as ArrayList<Obras>
                 adpapter.notifyDataSetChanged()
             })
@@ -55,10 +60,6 @@ class ObrasExplore : Fragment() {
 
 
 
-
-        binding.setaBackk.setOnClickListener {
-            findNavController().popBackStack()
-        }
 
 
         binding.setaBackk.setOnClickListener {

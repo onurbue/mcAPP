@@ -11,8 +11,11 @@ import models.Obras
  interface ObrasDAO {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insertObrasList(obra: List<Obras>)
-    @Query("SELECT * FROM obras")
-    fun getAll(): LiveData<List<Obras>>
+    @Query("SELECT * FROM obras WHERE museu_id = :museuId")
+    fun getMuseumObras(museuId : String): LiveData<List<Obras>>
+
+    @Query("DELETE FROM Obras")
+    fun clearAllData()
 
 
 }

@@ -17,6 +17,7 @@ import com.example.projetocma.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import models.Utility
 
 class LoginFragment : Fragment() {
     private  var _binding: FragmentLoginBinding? = null
@@ -47,7 +48,14 @@ class LoginFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity()) { task ->
-                        if (task.isSuccessful) {
+                        if (!Utility.isValidEmail(email)){
+                            Toast.makeText(
+                                context,
+                                "Formato de email invalido.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else if (task.isSuccessful) {
                             Log.d(TAG, "signInWithEmail:success")
                             val user = auth.currentUser
                             findNavController().navigate(R.id.action_loginFragment_to_museusPageFrag)

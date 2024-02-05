@@ -25,7 +25,8 @@ data class Tickets(
     @ColumnInfo(name = "img_ticket")var pathToImg: String?,
     @ColumnInfo(name = "price_ticket")var price: String,
     @ColumnInfo(name = "description_ticket")var description: String,
-    @ColumnInfo(name = "quantity_bought_ticket")var quantityBought: Long
+    @ColumnInfo(name = "quantity_bought_ticket")var quantityBought: Long,
+    @ColumnInfo(name = "museum_id") var museuId: String? = null
 ) {
     fun toHasMap(): Map<String, Any?> {
         return hashMapOf(

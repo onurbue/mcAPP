@@ -31,6 +31,7 @@ class TicketsFragment : Fragment() {
     var tickets = arrayListOf<Tickets>()
     private var adpapter = TicketsAdapter()
     private var museuId: String? = null
+    var appDatabase : AppDatabase? = null
 
     private val binding get() = _binding!!
 
@@ -51,18 +52,21 @@ class TicketsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val appDatabase = AppDatabase.getDatabase(requireContext())
+
 
 
         binding.listView.adapter = adpapter
-
+        appDatabase = AppDatabase.getDatabase(requireContext())
 
 
         if(appDatabase != null){
             Tickets.fetchTickets(museuId!!){
-                appDatabase.ticketsDao().insertTicketsList(it)
+                val ticketsWithMuseumId = it.map { ticket ->
+                    ticket.copy(museuId = museuId)
+                }
+                appDatabase!!.ticketsDao().insertTicketsList(ticketsWithMuseumId)
             }
-            appDatabase.ticketsDao().getAll().observe(viewLifecycleOwner, Observer {
+            appDatabase!!.ticketsDao().getMuseumTickets(museuId!!).observe(viewLifecycleOwner, Observer {
                 tickets = it as ArrayList<Tickets>
                 adpapter.notifyDataSetChanged()
             })

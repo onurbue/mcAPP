@@ -58,9 +58,12 @@ class EventFragment : Fragment() {
 
         if(appDatabase != null){
             Eventos.fetchEventos(museuId){
-                appDatabase.eventosDao().insertEventosList(it)
+                val eventsWithMuseumId = it.map {
+                    it.copy(museuId = museuId)
+                }
+                appDatabase.eventosDao().insertEventosList(eventsWithMuseumId)
             }
-            appDatabase.eventosDao().getAll().observe(viewLifecycleOwner, Observer {
+            appDatabase.eventosDao().getMuseumEvents(museuId!!).observe(viewLifecycleOwner, Observer {
                     eventos = it as ArrayList<Eventos>
                     adpapter.notifyDataSetChanged()
                 })

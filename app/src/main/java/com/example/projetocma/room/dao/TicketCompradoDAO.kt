@@ -14,4 +14,7 @@ interface TicketCompradoDAO {
     @Query("SELECT * FROM TicketsComprados")
     fun getAll(): LiveData<List<TicketsComprados>>
 
+    @Query("DELETE FROM TicketsComprados")
+    fun clearAllData()
+
 }
