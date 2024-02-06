@@ -79,7 +79,6 @@ data class Obras(
                     // Handle the error
                     return@addSnapshotListener
                 }
-                    // Parse the snapshot data into your Obras class
                 val obra = fromSnapshot(obraId, snapshot?.data ?: emptyMap())
 
                     callback(obra)
