@@ -43,7 +43,7 @@ data class Museu(
                 snapshot.get("name") as String,
                 snapshot.get("pathToImg") as? String,
                 snapshot.get("description") as String,
-                snapshot["categoria"] as? String,
+                snapshot.get("categoria") as? String,
                 snapshot.get("latitude") as Double,
                 snapshot.get("longitude") as Double,
                 snapshot.get("quantityClicked") as Long

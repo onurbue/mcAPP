@@ -31,11 +31,11 @@ data class Eventos(
         fun fromSnapshot(id: String, snapshot: Map<String, Any>): Eventos {
             return Eventos(
                 id,
-                snapshot["name"] as String,
-                snapshot["pathToImg"] as String ,
-                snapshot["data"] as String ,
-                snapshot["description"] as String,
-                snapshot["imgDescription"] as? String?
+                snapshot.get("name") as String,
+                snapshot.get("pathToImg") as String ,
+                snapshot.get("data") as String ,
+                snapshot.get("description") as String,
+                snapshot.get("imgDescription") as String?
             )
         }
 
