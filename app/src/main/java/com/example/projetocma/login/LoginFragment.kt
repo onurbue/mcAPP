@@ -41,6 +41,9 @@ class LoginFragment : Fragment() {
         binding.notRegiste.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_register_fragment)
         }
+        binding.forgotPass.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPassword)
+        }
 
         binding.ButtonLogin.setOnClickListener {
             val email = binding.EditTextEmail.text.toString()
