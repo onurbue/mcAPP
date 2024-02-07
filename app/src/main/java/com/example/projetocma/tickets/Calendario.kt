@@ -59,45 +59,40 @@ class Calendario : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.buttonBackEvent.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.buttonNextEvent.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable("selectedDate", selectedDate)
+            bundle.putString("name", name)
+            bundle.putString("description", description)
+            bundle.putString("price", price)
+            bundle.putString("pathToImage", pathToImage)
+            bundle.putString("museuId", museuId)
+            bundle.putString("ticketId", ticketId)
+
+            findNavController().navigate(R.id.action_calendario_to_ticketBasicc, bundle)
+        }
+
+
+        val today = LocalDate.now()
+        val minDate = Calendar.getInstance()
+        minDate.set(today.year, today.monthValue - 1, today.dayOfMonth)
+        binding.calendarView.minDate = minDate.timeInMillis
+
+        selectedDate = minDate.time
+
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, month, dayOfMonth)
 
-            val locale = Locale("pt")
-            val dateFormat = java.text.SimpleDateFormat("dd MMMM yyyy", locale)
+            // Data que o user dá input
             selectedDate = calendar.time
-
-
-            selectedDate = calendar.time
-
-            val date = dateFormat.format(calendar.time)
-            val selectedLocalDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd MMMM yyyy", locale))
-
-            if (selectedLocalDate.isBefore(LocalDate.now())) {
-
-                // Bloquear a data
-
-
-            } else {
-                binding.buttonNextEvent.setOnClickListener {
-                    val bundle = Bundle()
-                    bundle.putSerializable("selectedDate", selectedDate)
-                    bundle.putString("name", name)
-                    bundle.putString("description", description)
-                    bundle.putString("price", price)
-                    bundle.putString("pathToImage", pathToImage)
-                    bundle.putString("museuId", museuId)
-                    bundle.putString("ticketId", ticketId)
-
-                    findNavController().navigate(R.id.action_calendario_to_ticketBasicc, bundle)
-                }
-            }
-        }
-
-        binding.buttonBackEvent.setOnClickListener {
-            findNavController().popBackStack()
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
