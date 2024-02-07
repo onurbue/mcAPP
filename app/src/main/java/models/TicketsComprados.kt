@@ -91,16 +91,12 @@ data class TicketsComprados (
 
             for (ticket in ticketsList) {
                 try {
-                    // Parse the existing date string into a LocalDate
                     val selectedLocalDate = LocalDate.parse(ticket.date, dateFormat)
 
-                    // Check if the ticket date is not expired
                     if (selectedLocalDate.isEqual(LocalDate.now()) || selectedLocalDate.isAfter(LocalDate.now())) {
-                        Log.d("tikcet comparado" , "sucesso")
                         notExpiredTickets.add(ticket)
                     }
                 } catch (e: DateTimeParseException) {
-                    Log.d("tikcet comparado" , "nao")
                     e.printStackTrace()
                 }
             }

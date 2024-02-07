@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="600dp"
-    android:orientation="vertical"
     android:background="@drawable/bottom_sheet_round"
+    android:orientation="vertical"
     tools:context=".eventos.EventBottomSheet">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:src="@drawable/imageplaceholder"
         android:id="@+id/bottomSheetImg"
         android:layout_width="200dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/imageplaceholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -38,7 +38,6 @@
     </androidx.appcompat.widget.AppCompatImageView>
 
 
-
     <TextView
         android:id="@+id/textViewImgDescription"
         android:layout_width="370dp"
@@ -53,18 +52,29 @@
         app:layout_constraintTop_toBottomOf="@+id/bottomSheetImg"
         app:layout_constraintVertical_bias="0.0"></TextView>
 
-    <TextView
-        android:id="@+id/textViewDescription"
+    <ScrollView
         android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/outfitsemibold"
-        android:text="asdadsadsadasasd"
-        android:textSize="14dp"
+        android:layout_height="370dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintHorizontal_bias="0.707"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewImgDescription"
-        app:layout_constraintVertical_bias="0.098"></TextView>
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/outfitsemibold"
+            android:text="asdadsadsadasasd"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.695"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewImgTitle"
+            app:layout_constraintVertical_bias="0.098"></TextView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

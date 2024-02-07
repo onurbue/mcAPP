@@ -53,18 +53,29 @@
         app:layout_constraintTop_toBottomOf="@+id/bottomSheetHistoriaImg"
         app:layout_constraintVertical_bias="0.0"></TextView>
 
-    <TextView
-        android:id="@+id/textViewDescriptionHistoria"
+    <ScrollView
         android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/outfitsemibold"
-        android:text="asdadsadsadasasd"
-        android:textSize="14dp"
+        android:layout_height="370dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintHorizontal_bias="0.707"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewImgTitle"
-        app:layout_constraintVertical_bias="0.098"></TextView>
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textViewDescriptionHistoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/outfitsemibold"
+            android:text="asdadsadsadasasd"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.695"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewImgTitle"
+            app:layout_constraintVertical_bias="0.098"></TextView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
