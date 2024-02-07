@@ -60,7 +60,6 @@ class MuseusPageFrag : Fragment() {
 
         }
         binding.qrCodeButton.setOnClickListener {
-            // Navigate to the destination fragment
             findNavController().navigate(R.id.action_museusPageFrag_to_qrCode)
 
         }
@@ -68,6 +67,6 @@ class MuseusPageFrag : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Set the binding to null to release resources
+        _binding = null
     }
 }
