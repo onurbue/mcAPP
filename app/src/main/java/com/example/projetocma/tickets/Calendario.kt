@@ -1,16 +1,24 @@
 package com.example.projetocma.tickets
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentCalendarioBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.time.Clock
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
+import java.text.SimpleDateFormat
+
 
 class Calendario : Fragment() {
     private var _binding: FragmentCalendarioBinding? = null
@@ -47,6 +55,7 @@ class Calendario : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,7 +66,27 @@ class Calendario : Fragment() {
             val locale = Locale("pt")
             val dateFormat = java.text.SimpleDateFormat("dd MMMM yyyy", locale)
             selectedDate = calendar.time
+
+
+            selectedDate = calendar.time
+
             val date = dateFormat.format(calendar.time)
+            val selectedLocalDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd MMMM yyyy", locale))
+
+            if (selectedLocalDate.isBefore(LocalDate.now())) {
+
+                //BLOQUEAR A DATA
+
+
+
+
+
+            } else {
+
+
+            }
+
+
         }
 
         binding.buttonNextEvent.setOnClickListener {
@@ -83,7 +112,4 @@ class Calendario : Fragment() {
         _binding = null
     }
 
-    fun getSelectedDate(): Date? {
-        return selectedDate
-    }
 }

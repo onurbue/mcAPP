@@ -22,6 +22,22 @@
         app:layout_constraintTop_toTopOf="@+id/login_accou"
         app:layout_constraintVertical_bias="0.0" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/setaBackk2"
+        android:layout_width="11dp"
+        android:layout_height="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/seta_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027">
+
+    </androidx.appcompat.widget.AppCompatImageView>
+
     <TextView
         android:id="@+id/login_accou"
         android:layout_width="wrap_content"

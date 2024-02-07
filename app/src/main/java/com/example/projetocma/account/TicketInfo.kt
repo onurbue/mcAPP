@@ -43,8 +43,6 @@ class TicketInfo : Fragment() {
     ): View? {
         _binding = FragmentTicketInfoBinding.inflate(inflater, container, false)
 
-
-
         Utility.setImage(image, binding.ticketImg, requireContext())
         binding.ticketName.text = name
         binding.ticketPrice.text = price + "€"
