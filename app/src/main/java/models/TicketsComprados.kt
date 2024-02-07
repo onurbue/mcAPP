@@ -1,10 +1,19 @@
 package models
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.util.Calendar
+import java.util.Locale
 
 @Entity
 data class TicketsComprados (
@@ -43,6 +52,7 @@ data class TicketsComprados (
             )
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun getTicketsComprados(userId: String?, callback: (List<TicketsComprados>) -> Unit){
             val db = Firebase.firestore
 
@@ -50,6 +60,7 @@ data class TicketsComprados (
                 .addSnapshotListener { snapshoot, error ->
                     snapshoot?.documents?.let {
                         var ticketsComprados = arrayListOf<TicketsComprados>()
+                        var ticketsCompradosNotExpired = arrayListOf<TicketsComprados>()
                         ticketsComprados.clear()
                         for (document in it) {
                             document.data?.let { data ->
@@ -61,9 +72,40 @@ data class TicketsComprados (
                                 )
                             }
                         }
-                        callback(ticketsComprados)
+                       filterExpiredTickets(ticketsComprados){
+                           ticketsCompradosNotExpired.addAll(it)
+                       }
+                        callback(ticketsCompradosNotExpired)
+
+
+
                     }
                 }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun filterExpiredTickets(ticketsList: List<TicketsComprados>, callback: (List<TicketsComprados>) -> Unit) {
+            val notExpiredTickets = mutableListOf<TicketsComprados>()
+            val locale = Locale("pt")
+            val dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy", locale)
+
+            for (ticket in ticketsList) {
+                try {
+                    // Parse the existing date string into a LocalDate
+                    val selectedLocalDate = LocalDate.parse(ticket.date, dateFormat)
+
+                    // Check if the ticket date is not expired
+                    if (selectedLocalDate.isEqual(LocalDate.now()) || selectedLocalDate.isAfter(LocalDate.now())) {
+                        Log.d("tikcet comparado" , "sucesso")
+                        notExpiredTickets.add(ticket)
+                    }
+                } catch (e: DateTimeParseException) {
+                    Log.d("tikcet comparado" , "nao")
+                    e.printStackTrace()
+                }
+            }
+            callback(notExpiredTickets)
+
         }
     }
 }
