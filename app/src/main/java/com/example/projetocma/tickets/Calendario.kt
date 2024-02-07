@@ -75,7 +75,7 @@ class Calendario : Fragment() {
 
             if (selectedLocalDate.isBefore(LocalDate.now())) {
 
-                //BLOQUEAR A DATA
+                // Bloquear a data
 
 
             } else {
