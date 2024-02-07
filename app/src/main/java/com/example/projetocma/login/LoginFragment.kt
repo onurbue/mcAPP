@@ -45,42 +45,41 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_forgotPassword)
         }
 
+        binding.setaBackk2.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+
+
+
         binding.ButtonLogin.setOnClickListener {
             val email = binding.EditTextEmail.text.toString()
             val password = binding.EditTextPassword.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(requireActivity()) { task ->
-                        if (!Utility.isValidEmail(email)){
-                            Toast.makeText(
-                                context,
-                                "Formato de email invalido.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                if (!Utility.isValidEmail(email)){
+                    Toast.makeText(
+                        context,
+                        "Formato de email invalido.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(requireActivity()) { task ->
+                            if (task.isSuccessful) {
+                                Log.d(TAG, "signInWithEmail:success")
+                                findNavController().navigate(R.id.action_loginFragment_to_museusPageFrag)
+                            } else {
+                                Log.w(TAG, "signInWithEmail:failure", task.exception)
+                                Toast.makeText(
+                                    context,
+                                    "Authentication Failed",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
                         }
-                        else if (task.isSuccessful) {
-                            Log.d(TAG, "signInWithEmail:success")
-                            findNavController().navigate(R.id.action_loginFragment_to_museusPageFrag)
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                context,
-                                "Authentication Failed",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-
-                        }
-                    }
-            }else{
-                Toast.makeText(
-                    context,
-                    "Credentials missing",
-                    Toast.LENGTH_SHORT,
-                ).show()
+                }
             }
         }
-
 
         return binding.root
     }

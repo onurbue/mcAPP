@@ -59,6 +59,7 @@ class MuseuDetail : Fragment() {
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
 
+
         Museu.updateQuantityClicked(museuId!!)
         binding.textViewMuseumName.text = name
         Utility.configMap(latitude,longitude,mapView)
@@ -89,7 +90,7 @@ class MuseuDetail : Fragment() {
 
         binding.reserveMuseumCodeButton.setOnClickListener {
             if (userId == null){
-                Toast.makeText(requireContext(), "Faça o login primeiro", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.loginFragment)
             }else{
                 val bundle = Bundle()
                 bundle.putString("museuId", museuId)

@@ -40,11 +40,13 @@ class MuseusPageFrag : Fragment() {
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.GONE
 
+        if (userId != null){
+            binding.LoginButton.visibility = View.GONE
+        }
+
         binding.LoginButton.setOnClickListener{
             if (userId == null){
                 findNavController().navigate(R.id.loginFragment)
-            }else{
-                Toast.makeText(requireContext(), "Já fez o login", Toast.LENGTH_SHORT).show()
             }
 
         }

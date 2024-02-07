@@ -68,10 +68,7 @@ class TicketBasic : Fragment() {
         binding = FragmentTicketBasiccBinding.inflate(inflater, container, false)
         CompoundButtonCompat.setButtonTintList(binding.checkbox, ColorStateList.valueOf(buttonTint))
 
-
-
         val initialPrice = price!!.toInt()
-
 
 
         binding.ticketPrice.text = formattedPrice
@@ -81,7 +78,9 @@ class TicketBasic : Fragment() {
         binding.quantidade.text = quantity.toString()
 
         binding.addVector.setOnClickListener {
-            quantity++
+            if (quantity < 4){
+                quantity++
+            }
             binding.quantidade.text = quantity.toString()
             val updatedPrice = initialPrice * quantity
             binding.ticketNamesPrice.text = updatedPrice.toString() + "€"
