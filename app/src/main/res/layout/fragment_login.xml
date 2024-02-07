@@ -164,43 +164,18 @@
         app:layout_constraintVertical_bias="0.466" />
 
     <TextView
-        android:id="@+id/google"
-        android:layout_width="51dp"
-        android:layout_height="21dp"
-        android:layout_marginEnd="112dp"
-        android:text="@string/google"
-        android:textAppearance="@style/google"
-        app:layout_constraintBottom_toBottomOf="@+id/google_logo"
-        app:layout_constraintEnd_toEndOf="@+id/line"
-        app:layout_constraintTop_toTopOf="@+id/google_logo"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <View
-        android:id="@+id/google_logo"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/google_logo"
-        app:layout_constraintStart_toStartOf="@+id/line2"
-        app:layout_constraintTop_toBottomOf="@+id/or_sign_up_" />
-
-    <TextView
-        android:clickable="true"
         android:id="@+id/not_registe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
+        android:clickable="true"
         android:gravity="top"
         android:text="@string/not_registe"
         android:textAppearance="@style/not_registe"
-        app:layout_constraintEnd_toEndOf="@+id/google"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="@+id/google_logo"
-        app:layout_constraintTop_toBottomOf="@+id/google_logo" />
-
-
-
+        app:layout_constraintEnd_toEndOf="@+id/line"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/line2"
+        app:layout_constraintTop_toBottomOf="@+id/or_sign_up_" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
