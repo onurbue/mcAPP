@@ -57,11 +57,10 @@ class LoginFragment : Fragment() {
             val password = binding.EditTextPassword.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 if (!Utility.isValidEmail(email)){
-                    Toast.makeText(
-                        context,
+                    Utility.showCustomToast(
+                        requireContext(),
                         "Formato de email invalido.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    )
                 } else {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(requireActivity()) { task ->
@@ -70,11 +69,10 @@ class LoginFragment : Fragment() {
                                 findNavController().navigate(R.id.action_loginFragment_to_museusPageFrag)
                             } else {
                                 Log.w(TAG, "signInWithEmail:failure", task.exception)
-                                Toast.makeText(
-                                    context,
+                                Utility.showCustomToast(
+                                    requireContext(),
                                     "Authentication Failed",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
+                                )
                             }
                         }
                 }

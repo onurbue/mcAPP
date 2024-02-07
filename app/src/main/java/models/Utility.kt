@@ -1,8 +1,12 @@
 package models
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.projetocma.R
 import com.google.firebase.Firebase
 import com.google.firebase.storage.storage
 import com.mapbox.maps.CameraOptions
@@ -49,6 +53,20 @@ abstract class Utility {
 
          fun isValidPhoneNumber(phoneNumber: String): Boolean {
             return phoneNumber.length == 9
+        }
+
+        fun showCustomToast(context: Context, message: String) {
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater.inflate(R.layout.custom_toast, null)
+
+            val toastText = layout.findViewById<TextView>(R.id.toastText)
+            toastText.text = message
+
+
+            val toast = Toast(context)
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = layout
+            toast.show()
         }
     }
 }

@@ -5,10 +5,6 @@
         android:title=""
         android:icon="@drawable/menu1" />
 
-    <item
-        android:id="@+id/qrcodenav"
-        android:title=""
-        android:icon="@drawable/qrcode" />
 
     <item
         android:id="@+id/profile"

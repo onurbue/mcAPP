@@ -124,7 +124,7 @@ class TicketBasic : Fragment() {
                  Tickets.updateTicketBought(museuId!!, ticketId!!)
             }
 
-            showToast("O pagamento foi bem sucedido")
+            Utility.showCustomToast(requireContext(),"O pagamento foi bem sucedido")
             findNavController().navigate(R.id.action_ticketBasicc_to_museusPageFrag)
 
         }
@@ -137,9 +137,6 @@ class TicketBasic : Fragment() {
         return binding.root
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
 
 
 }

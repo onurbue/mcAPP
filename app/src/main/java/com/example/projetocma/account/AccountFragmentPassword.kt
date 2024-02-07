@@ -17,6 +17,7 @@ import com.example.projetocma.databinding.FragmentAccountPasswordBinding
 import com.example.projetocma.databinding.FragmentEventBottomSheetBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import models.Utility
 
 class AccountFragmentPassword : Fragment() {
     private lateinit var binding: FragmentAccountPasswordBinding
@@ -45,15 +46,12 @@ class AccountFragmentPassword : Fragment() {
                         }
                     }
                 findNavController().navigate(R.id.action_accountPassword_to_accountFragment)
-                showToast("A palavra passe foi alterada com sucesso")
+                Utility.showCustomToast(requireContext(),"A palavra passe foi alterada com sucesso")
             } else {
-                showToast("A palavra passe não coincide")
+                Utility.showCustomToast(requireContext(),"A palavra passe não coincide")
             }
         }
         return binding.root
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
 }

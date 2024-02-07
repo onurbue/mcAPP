@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentForgotPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
+import models.Utility
 
 
 class ForgotPassword : Fragment() {
@@ -45,10 +46,10 @@ class ForgotPassword : Fragment() {
 
             auth?.sendPasswordResetEmail(email)
                 ?.addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Por favor abra o email", Toast.LENGTH_SHORT).show()
+                    Utility.showCustomToast(requireContext(), "Por favor abra o email")
                 }
                 ?.addOnFailureListener {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                    Utility.showCustomToast(requireContext(), it.toString())
                 }
             findNavController().navigate(R.id.action_forgotPassword_to_loginFragment)
         }

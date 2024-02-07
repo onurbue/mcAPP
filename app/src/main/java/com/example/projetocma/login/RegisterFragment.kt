@@ -42,31 +42,28 @@ class RegisterFragment : Fragment() {
             val phoneNumber = binding.editTextRegisterTelefone.text.toString()
 
             if (!Utility.isValidEmail(email)) {
-                Toast.makeText(
-                    context,
+                Utility.showCustomToast(
+                    requireContext(),
                     "Invalid email format. Please include '@' and '.com'",
-                    Toast.LENGTH_SHORT
-                ).show()
+                )
                 return@setOnClickListener
             }
 
             // Validate username length
             if (!Utility.isValidUsername(username)) {
-                Toast.makeText(
-                    context,
+                Utility.showCustomToast(
+                    requireContext(),
                     "Username must be between 6 and 16 characters",
-                    Toast.LENGTH_SHORT
-                ).show()
+                )
                 return@setOnClickListener
             }
 
             // Validate phone number length
             if (!Utility.isValidPhoneNumber(phoneNumber)) {
-                Toast.makeText(
-                    context,
+                Utility.showCustomToast(
+                    requireContext(),
                     "Phone number must have 9 digits",
-                    Toast.LENGTH_SHORT
-                ).show()
+                )
                 return@setOnClickListener
             }
 

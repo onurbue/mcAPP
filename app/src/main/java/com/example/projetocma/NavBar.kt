@@ -17,10 +17,6 @@ class NavBar : AppCompatActivity() {
     private lateinit var navController: NavController
 
 
-    val homeFragment = MuseusExplore()
-    val qrCodeFragment = QrCode()
-    val accountFragment = AccountFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNavBarBinding.inflate(layoutInflater)
@@ -37,7 +33,6 @@ class NavBar : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> navController.navigate(R.id.museusExplore)
-                R.id.qrcodenav -> navController.navigate(R.id.qrCode)
                 R.id.profile -> navController.navigate(R.id.accountFragment)
                 else -> {
                 }
