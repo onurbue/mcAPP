@@ -54,7 +54,8 @@ class TicketBasic : Fragment() {
          selectedDate = arguments?.getSerializable("selectedDate") as? Date
          museuId = arguments?.getString("museuId")
          ticketId = arguments?.getString("ticketId")
-         formattedPrice = price + "€"
+         formattedPrice = "$price €"
+
 
 
     }
@@ -72,7 +73,6 @@ class TicketBasic : Fragment() {
 
 
         binding.ticketPrice.text = formattedPrice
-        binding.ticketNamesPrice.text = price.toString() + '€'
         binding.ticketName.text = name
         binding.description.text = description
         binding.quantidade.text = quantity.toString()
@@ -83,8 +83,9 @@ class TicketBasic : Fragment() {
             }
             binding.quantidade.text = quantity.toString()
             val updatedPrice = initialPrice * quantity
-            binding.ticketNamesPrice.text = updatedPrice.toString() + "€"
+            binding.ticketNamesPrice.text = "$updatedPrice €"
         }
+
 
         binding.minusVector.setOnClickListener {
             if (quantity > 1){
@@ -92,14 +93,14 @@ class TicketBasic : Fragment() {
             }
             binding.quantidade.text = quantity.toString()
             val updatedPrice = initialPrice * quantity
-            binding.ticketNamesPrice.text = updatedPrice.toString() + "€"
+            binding.ticketNamesPrice.text = "$updatedPrice €"
         }
 
         Utility.setImage(pathToImage, binding.ticketImg, requireContext())
 
             val formattedDate = SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(selectedDate)
             binding.data.text = formattedDate
-            binding.ticketNamesPrice.text = price
+            binding.ticketNamesPrice.text = formattedPrice
 
 
 
