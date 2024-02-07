@@ -8,14 +8,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainMetodoPagamento"
-        android:clickable="true"
         android:layout_width="0dp"
         android:layout_height="111dp"
+        android:layout_marginBottom="368dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintContacto"
+        app:layout_constraintTop_toBottomOf="@+id/constraintMudarPassword"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
@@ -61,13 +62,14 @@
         android:id="@+id/constrainMetodoPagamento1"
         android:layout_width="0dp"
         android:layout_height="111dp"
+        android:layout_marginBottom="192dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintContacto"
-        app:layout_constraintVertical_bias="0.382">
+        app:layout_constraintTop_toBottomOf="@+id/constrainMetodoPagamento"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textobilhetes1"
@@ -109,67 +111,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintContacto"
-        android:clickable="true"
-        android:layout_width="0dp"
-        android:layout_height="111dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintMudarPassword"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/textContacto"
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:gravity="top"
-            android:text="Perfil"
-            android:textAppearance="@style/hello_welco"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imagesetacontacto"
-            app:layout_constraintStart_toEndOf="@+id/imagecontacto"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imagesetacontacto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-            app:layout_constraintBottom_toBottomOf="@+id/textContacto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textContacto" />
-
-        <ImageView
-            android:id="@+id/imagecontacto"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="32dp"
-            android:src="@drawable/person"
-            app:layout_constraintBottom_toBottomOf="@+id/textContacto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textContacto" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:clickable="true"
         android:id="@+id/constraintMudarPassword"
         android:layout_width="0dp"
         android:layout_height="111dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17">
+        app:layout_constraintVertical_bias="0.19">
 
         <TextView
             android:id="@+id/textomudar_password"

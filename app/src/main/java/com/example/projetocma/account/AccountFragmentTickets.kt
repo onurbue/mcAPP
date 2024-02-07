@@ -48,6 +48,7 @@ class AccountFragmentTickets : Fragment() {
             }
             appDatabase.ticketsCompradosDao().getAll().observe(viewLifecycleOwner, Observer {
                 ticketsComprados = it as ArrayList<TicketsComprados>
+                ticketsComprados.sortBy { ticket -> ticket.date }
                 adapter.notifyDataSetChanged()
             })
         }
@@ -84,7 +85,7 @@ class AccountFragmentTickets : Fragment() {
                 rootView = TicketGridItemBinding.bind(convertView)
             }
             rootView.ticketName.text = ticketsComprados[position].name
-            rootView.ticketPrice.text = ticketsComprados[position].price + "€"
+            rootView.ticketPrice.text = ticketsComprados[position].date
             Utility.setImage(ticketsComprados[position].pathToImg, rootView.ticketImg, requireContext())
 
             rootView.root.setOnClickListener {

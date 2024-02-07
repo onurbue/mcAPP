@@ -48,10 +48,6 @@ class AccountFragment : Fragment() {
             findNavController().navigate(R.id.action_accountFragment_to_museusPageFrag)
         }
 
-        binding.constraintContacto.setOnClickListener {
-            findNavController().navigate(R.id.action_accountFragment_to_perfil)
-        }
-
         binding.constraintMudarPassword.setOnClickListener {
             findNavController().navigate(R.id.action_accountFragment_to_accountPassword)
         }

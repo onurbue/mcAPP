@@ -61,12 +61,6 @@
         tools:layout="@layout/fragment_qr_code" />
 
     <fragment
-        android:id="@+id/perfil"
-        android:name="com.example.projetocma.account.AccountFragmentContact"
-        android:label="fragment_contact"
-        tools:layout="@layout/fragment_account_contact" />
-
-    <fragment
         android:id="@+id/accountPassword"
         android:name="com.example.projetocma.account.AccountFragmentPassword"
         android:label="fragment_account_password"
@@ -131,11 +125,6 @@
         android:name="com.example.projetocma.account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
-        <action
-            android:id="@+id/action_accountFragment_to_perfil"
-            app:destination="@id/perfil"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_accountFragment_to_accountTickets"
             app:destination="@id/accountTickets"
