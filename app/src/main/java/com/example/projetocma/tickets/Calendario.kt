@@ -78,28 +78,20 @@ class Calendario : Fragment() {
                 //BLOQUEAR A DATA
 
 
-
-
-
             } else {
+                binding.buttonNextEvent.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("selectedDate", selectedDate)
+                    bundle.putString("name", name)
+                    bundle.putString("description", description)
+                    bundle.putString("price", price)
+                    bundle.putString("pathToImage", pathToImage)
+                    bundle.putString("museuId", museuId)
+                    bundle.putString("ticketId", ticketId)
 
-
+                    findNavController().navigate(R.id.action_calendario_to_ticketBasicc, bundle)
+                }
             }
-
-
-        }
-
-        binding.buttonNextEvent.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putSerializable("selectedDate", selectedDate)
-            bundle.putString("name", name)
-            bundle.putString("description", description)
-            bundle.putString("price", price)
-            bundle.putString("pathToImage", pathToImage)
-            bundle.putString("museuId",museuId)
-            bundle.putString("ticketId", ticketId)
-
-            findNavController().navigate(R.id.action_calendario_to_ticketBasicc, bundle)
         }
 
         binding.buttonBackEvent.setOnClickListener {
