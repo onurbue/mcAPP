@@ -105,7 +105,7 @@ class MBWay : Fragment() {
                         }
 
 
-                findNavController().navigate(R.id.action_MBWay3_to_museusPageFrag)
+                findNavController().navigate(R.id.action_MBWay3_to_museusExplore)
                 Utility.showCustomToast(requireContext(),"O pagamento foi bem sucedido")
 
                } else {

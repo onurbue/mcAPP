@@ -299,8 +299,8 @@
         android:name="MBWay"
         android:label="MBWay" >
         <action
-            android:id="@+id/action_MBWay3_to_museusPageFrag"
-            app:destination="@id/museusPageFrag"
+            android:id="@+id/action_MBWay3_to_museusExplore"
+            app:destination="@id/museusExplore"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>

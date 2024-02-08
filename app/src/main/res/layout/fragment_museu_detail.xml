@@ -147,7 +147,7 @@
         android:layout_marginTop="40dp"
         android:width="339dp"
         android:backgroundTint="#605E79"
-        android:text="Reservar"
+        android:text="Comprar Bilhetes"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18dp"
