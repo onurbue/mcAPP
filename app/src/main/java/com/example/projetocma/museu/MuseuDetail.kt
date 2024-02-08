@@ -1,7 +1,13 @@
 package com.example.projetocma.museu
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +15,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContentProviderCompat
 import androidx.navigation.fragment.findNavController
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentMuseuDetailBinding
@@ -18,8 +27,13 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mapbox.common.MapboxOptions
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import models.Museu
 import models.Utility
 
@@ -62,7 +76,7 @@ class MuseuDetail : Fragment() {
 
         Museu.updateQuantityClicked(museuId!!)
         binding.textViewMuseumName.text = name
-        Utility.configMap(latitude,longitude,mapView)
+        configMap(latitude,longitude,mapView)
         Utility.setImage(imagePath, binding.museumImage, requireContext())
 
         binding.historiaButton.setOnClickListener {
@@ -114,5 +128,90 @@ class MuseuDetail : Fragment() {
         _binding = null // Set the binding to null to release resources
     }
 
+    fun configMap(latitude: Double?, longitude: Double?, mapView: MapView) {
+
+        mapView?.mapboxMap?.loadStyle(
+            Style.MAPBOX_STREETS
+        ) { addAnnotationToMap(latitude, longitude, mapView) }
+
+        mapView.mapboxMap.setCamera(
+            CameraOptions.Builder()
+                .center(com.mapbox.geojson.Point.fromLngLat(longitude!!, latitude!!))
+                .pitch(3.0)
+                .zoom(15.0)
+                .bearing(0.0)
+                .build()
+        )
+    }
+
+
+    fun addAnnotationToMap(latitude: Double?, longitude: Double?, mapView: MapView) {
+        // Create an instance of the Annotation API and get the PointAnnotationManager.
+        bitmapFromDrawableRes(
+            requireContext(),
+            R.drawable.red_marker
+        )?.let { iconBitmap ->
+            val annotationApi = mapView.annotations
+            val pointAnnotationManager = annotationApi.createPointAnnotationManager()
+
+            val coordinates = Point.fromLngLat(longitude!!, latitude!!)
+
+            // Set options for the resulting symbol layer.
+            val pointAnnotationOptions = PointAnnotationOptions()
+                // Define a geographic coordinate.
+                .withPoint(coordinates)
+                // Specify the bitmap you assigned to the point annotation
+                // The bitmap will be added to map style automatically.
+                .withIconImage(iconBitmap)
+
+            // Add the resulting pointAnnotation to the map.
+            val annotation = pointAnnotationManager?.create(pointAnnotationOptions)
+
+            // Set up a click listener for the annotation
+            annotation?.let { pointAnnotation ->
+                pointAnnotationManager.clickListeners.add { clickedAnnotation ->
+                    if (clickedAnnotation == pointAnnotation) {
+                        // Handle the click event
+                        val gmmIntentUri =
+                            Uri.parse("google.navigation:q=${coordinates.latitude()},${coordinates.longitude()}&mode=d")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        startActivity(mapIntent)
+                        true
+                    } else {
+                        false
+                    }
+                }
+
+            }
+
+        }
+    }
+
+    fun bitmapFromDrawableRes(context: Context, @DrawableRes resourceId: Int) =
+        convertDrawableToBitmap(AppCompatResources.getDrawable(context, resourceId))
+
+    private fun convertDrawableToBitmap(sourceDrawable: Drawable?): Bitmap? {
+        if (sourceDrawable == null) {
+            return null
+        }
+        return if (sourceDrawable is BitmapDrawable) {
+            sourceDrawable.bitmap
+        } else {
+            // copying drawable object to not manipulate on the same reference
+            val constantState = sourceDrawable.constantState ?: return null
+            val drawable = constantState.newDrawable().mutate()
+            val bitmap: Bitmap = Bitmap.createBitmap(
+                drawable.intrinsicWidth, drawable.intrinsicHeight,
+                Bitmap.Config.ARGB_8888
+            )
+            val canvas = Canvas(bitmap)
+            drawable.setBounds(0, 0, canvas.width, canvas.height)
+            drawable.draw(canvas)
+            bitmap
+        }
+    }
+
 
 }
+
+
