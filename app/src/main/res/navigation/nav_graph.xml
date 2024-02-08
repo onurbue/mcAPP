@@ -96,6 +96,11 @@
             app:destination="@id/museuDetail"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_museusExplore_to_museusPageFrag"
+            app:destination="@id/museusPageFrag"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/museuDetail"

@@ -45,6 +45,10 @@ class MuseusExplore : Fragment() {
             showCategoryMenu(categoryCard)
         }
 
+        binding.setaBack.setOnClickListener{
+            findNavController().navigate(R.id.action_museusExplore_to_museusPageFrag)
+        }
+
         val navBar =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navBar.visibility = View.VISIBLE
