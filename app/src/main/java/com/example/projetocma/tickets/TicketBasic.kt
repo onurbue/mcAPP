@@ -114,15 +114,21 @@ class TicketBasic : Fragment() {
                 putString("name", name)
                 putString("pathToImage", pathToImage)
                 putString("description", description)
-                putInt("price", updatedPrice!!)
+                putString("price", price)
+                putInt("finalPrice", updatedPrice!!)
                 putString("museuId", museuId)
                 putString("ticketId", ticketId)
                 putInt("quantity", quantity)
 
             }
 
+            if (binding.checkbox.isChecked){
+                findNavController().navigate(R.id.action_ticketBasicc_to_MBWay3, bundle)
+            }else{
+                Utility.showCustomToast(requireContext(), "Escolha o metodo de pagamento")
+            }
 
-            findNavController().navigate(R.id.action_ticketBasicc_to_MBWay3, bundle)
+
 
         }
 

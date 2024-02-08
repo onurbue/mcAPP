@@ -29,11 +29,12 @@ class MBWay : Fragment() {
     var selectedDate: String? = null
     var name : String? = null
     var description : String? = null
-    var price : Int? = null
+    var price : String? = null
     var pathToImage : String? = null
     var museuId : String? = null
     var ticketId : String? = null
     var quantity: Int? = null
+    var finalPrice : Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +44,12 @@ class MBWay : Fragment() {
         userId = arguments?.getString("userId")
         name = arguments?.getString("name")
         description = arguments?.getString("description")
-        price = arguments?.getInt("price")
+        price = arguments?.getString("price")
         pathToImage = arguments?.getString("pathToImage")
         museuId = arguments?.getString("museuId")
         ticketId = arguments?.getString("ticketId")
         quantity = arguments?.getInt("quantity")
+        finalPrice = arguments?.getInt("finalPrice")
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +61,7 @@ class MBWay : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mbwayTotalValue.text = "$price €"
+        binding.mbwayTotalValue.text = "$finalPrice €"
         val timeTextView = binding.timeText
         startTimer(timeTextView)
     }
@@ -89,7 +91,7 @@ class MBWay : Fragment() {
                                 name = name,
                                 pathToImg = pathToImage,
                                 description = description,
-                                price = price.toString()
+                                price = price
                             )
                             val ticketMap = ticketComprado.toHashMap()
 
