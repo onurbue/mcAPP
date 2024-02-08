@@ -33,6 +33,7 @@ class MBWay : Fragment() {
     var pathToImage : String? = null
     var museuId : String? = null
     var ticketId : String? = null
+    var phoneNumber : String? = null
     var quantity: Int? = null
     var finalPrice : Int? = null
 
@@ -50,6 +51,8 @@ class MBWay : Fragment() {
         ticketId = arguments?.getString("ticketId")
         quantity = arguments?.getInt("quantity")
         finalPrice = arguments?.getInt("finalPrice")
+        phoneNumber = arguments?.getString("phoneNumber")
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +65,7 @@ class MBWay : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.mbwayTotalValue.text = "$finalPrice €"
+        binding.mbwayPhone.text = phoneNumber
         val timeTextView = binding.timeText
         startTimer(timeTextView)
     }

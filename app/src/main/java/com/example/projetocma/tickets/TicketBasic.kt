@@ -70,6 +70,7 @@ class TicketBasic : Fragment() {
         val buttonTint = ContextCompat.getColor(requireContext(), R.color.black)
         binding = FragmentTicketBasiccBinding.inflate(inflater, container, false)
         CompoundButtonCompat.setButtonTintList(binding.checkbox, ColorStateList.valueOf(buttonTint))
+        binding.editnumber.visibility = View.GONE
         var quantity = 1
 
         val initialPrice = price!!.toInt()
@@ -99,6 +100,14 @@ class TicketBasic : Fragment() {
             binding.ticketNamesPrice.text = "$updatedPrice €"
         }
 
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.editnumber.visibility = View.VISIBLE
+            } else {
+                binding.editnumber.visibility = View.GONE
+            }
+        }
+
         Utility.setImage(pathToImage, binding.ticketImg, requireContext())
 
             val formattedDate = SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(selectedDate)
@@ -108,24 +117,28 @@ class TicketBasic : Fragment() {
 
 
         binding.buttonNextBasic.setOnClickListener {
+            val phoneNumber = binding.editnumber.text.toString()
             val bundle = Bundle().apply {
                 putString("formattedDate", formattedDate)
                 putString("userId", userId)
                 putString("name", name)
+                putString("phoneNumber", phoneNumber)
                 putString("pathToImage", pathToImage)
                 putString("description", description)
                 putString("price", price)
-                putInt("finalPrice", updatedPrice!!)
+                putInt("finalPrice", updatedPrice ?: 10)
                 putString("museuId", museuId)
                 putString("ticketId", ticketId)
                 putInt("quantity", quantity)
 
             }
 
-            if (binding.checkbox.isChecked){
-                findNavController().navigate(R.id.action_ticketBasicc_to_MBWay3, bundle)
-            }else{
+            if (!binding.checkbox.isChecked){
                 Utility.showCustomToast(requireContext(), "Escolha o metodo de pagamento")
+            }else if(!Utility.isValidPhoneNumber(binding.editnumber.text.toString())){
+                Utility.showCustomToast(requireContext(), "Numero de telemovel invalido")
+            }else{
+                findNavController().navigate(R.id.action_ticketBasicc_to_MBWay3, bundle)
             }
 
 
