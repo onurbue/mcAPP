@@ -64,7 +64,7 @@
         android:id="@+id/textqrcode"
         android:layout_width="251dp"
         android:layout_height="106dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="88dp"
         android:gravity="center"
         android:text="@string/scan_obra2"
         android:textAppearance="@style/scan_obra_2"
@@ -72,24 +72,9 @@
         android:textSize="16sp"
 
         app:layout_constraintEnd_toEndOf="@+id/cardView2"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView2"
         app:lineHeight="36sp" />
-
-    <Button
-        android:id="@+id/selecionar"
-        android:layout_width="125.5dp"
-        android:layout_height="40dp"
-        android:background="@drawable/rectangle_text_bold"
-        android:text="@string/scan_obra3"
-        android:textAlignment="center"
-        android:textAppearance="@style/scan_obra_3"
-        android:textColor="#0A0A0E"
-        app:layout_constraintEnd_toEndOf="@+id/textqrcode"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/textqrcode"
-        app:layout_constraintTop_toBottomOf="@+id/textqrcode"
-        app:lineHeight="18sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

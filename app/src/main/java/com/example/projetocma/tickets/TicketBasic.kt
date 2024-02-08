@@ -33,7 +33,7 @@ import java.util.UUID
 
 class TicketBasic : Fragment() {
     private lateinit var binding: FragmentTicketBasiccBinding
-    val randomUid: String = UUID.randomUUID().toString()
+
     var userId = Firebase.auth.currentUser?.uid
     var selectedDate: Date? = null
     var name : String? = null
@@ -43,6 +43,8 @@ class TicketBasic : Fragment() {
     var museuId : String? = null
     var ticketId : String? = null
     var formattedPrice: String? = null
+    var updatedPrice: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,10 +66,11 @@ class TicketBasic : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var quantity = 1
+
         val buttonTint = ContextCompat.getColor(requireContext(), R.color.black)
         binding = FragmentTicketBasiccBinding.inflate(inflater, container, false)
         CompoundButtonCompat.setButtonTintList(binding.checkbox, ColorStateList.valueOf(buttonTint))
+        var quantity = 1
 
         val initialPrice = price!!.toInt()
 
@@ -82,7 +85,7 @@ class TicketBasic : Fragment() {
                 quantity++
             }
             binding.quantidade.text = quantity.toString()
-            val updatedPrice = initialPrice * quantity
+             updatedPrice = initialPrice * quantity
             binding.ticketNamesPrice.text = "$updatedPrice €"
         }
 
@@ -92,7 +95,7 @@ class TicketBasic : Fragment() {
                 quantity--
             }
             binding.quantidade.text = quantity.toString()
-            val updatedPrice = initialPrice * quantity
+             updatedPrice = initialPrice * quantity
             binding.ticketNamesPrice.text = "$updatedPrice €"
         }
 
@@ -105,28 +108,21 @@ class TicketBasic : Fragment() {
 
 
         binding.buttonNextBasic.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("formattedDate", formattedDate)
+                putString("userId", userId)
+                putString("name", name)
+                putString("pathToImage", pathToImage)
+                putString("description", description)
+                putInt("price", updatedPrice!!)
+                putString("museuId", museuId)
+                putString("ticketId", ticketId)
+                putInt("quantity", quantity)
 
-            val db = FirebaseFirestore.getInstance()
-             for (i in 0 until quantity) {
-
-                 val ticketComprado = TicketsComprados(
-                     id = randomUid,
-                     date = formattedDate,
-                     userId = userId,
-                     name = name,
-                     pathToImg = pathToImage,
-                     description = description,
-                     price = price
-                 )
-                 val ticketMap = ticketComprado.toHashMap()
-
-                Tickets.addTicket(ticketMap)
-
-                 Tickets.updateTicketBought(museuId!!, ticketId!!)
             }
 
-            Utility.showCustomToast(requireContext(),"O pagamento foi bem sucedido")
-            findNavController().navigate(R.id.action_ticketBasicc_to_museusPageFrag)
+
+            findNavController().navigate(R.id.action_ticketBasicc_to_MBWay3, bundle)
 
         }
 

@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
                                 Log.d(TAG, "signInWithEmail:success")
-                                findNavController().navigate(R.id.action_loginFragment_to_museusPageFrag)
+                                findNavController().navigate(R.id.action_loginFragment_to_museusExplore)
                             } else {
                                 Log.w(TAG, "signInWithEmail:failure", task.exception)
                                 Utility.showCustomToast(
