@@ -126,7 +126,7 @@ class TicketBasic : Fragment() {
             }
 
             showToast("O pagamento foi bem sucedido")
-            findNavController().navigate(R.id.action_ticketBasicc_to_museusPageFrag)
+            findNavController().navigate(R.id.action_ticketBasicc_to_MBWay3)
 
         }
 

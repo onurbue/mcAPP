@@ -202,6 +202,9 @@
             app:destination="@id/museusPageFrag"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_ticketBasicc_to_MBWay3"
+            app:destination="@id/MBWay3" />
     </fragment>
     <fragment
         android:id="@+id/historiaMuseu"
@@ -284,6 +287,10 @@
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/MBWay3"
+        android:name="MBWay"
+        android:label="MBWay" />
 
 
 </navigation>

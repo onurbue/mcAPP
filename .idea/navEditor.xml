@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="MBWay3">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1672" />
+                            <option name="y" value="422" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="accountFragment">
                     <value>
                       <LayoutPositions>
@@ -30,11 +42,6 @@
                               </value>
                             </entry>
                             <entry key="action_accountFragment_to_museusPageFrag">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_accountFragment_to_perfil">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -182,6 +189,15 @@
                             <option name="y" value="270" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_forgotPassword_to_loginFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -241,6 +257,16 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_loginFragment_to_forgotPassword">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_loginFragment_to_museusExplore">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_loginFragment_to_museusPageFrag">
                               <value>
                                 <LayoutPositions />
@@ -389,18 +415,6 @@
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="perfil">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1795" />
-                            <option name="y" value="-820" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
