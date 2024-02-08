@@ -105,6 +105,7 @@ class MuseuDetail : Fragment() {
         binding.reserveMuseumCodeButton.setOnClickListener {
             if (userId == null){
                 findNavController().navigate(R.id.loginFragment)
+                Utility.showCustomToast(requireContext(), "Precisa de fazer o login")
             }else{
                 val bundle = Bundle()
                 bundle.putString("museuId", museuId)
