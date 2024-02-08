@@ -34,6 +34,7 @@ class NavBar : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> navController.navigate(R.id.museusExplore)
                 R.id.profile -> navController.navigate(R.id.accountFragment)
+                R.id.qrCode -> navController.navigate(R.id.qrCode)
                 else -> {
                 }
             }

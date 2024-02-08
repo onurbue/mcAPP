@@ -4,6 +4,10 @@
         android:id="@+id/home"
         android:title=""
         android:icon="@drawable/menu1" />
+    <item
+        android:title=""
+        android:icon="@drawable/qrcode"
+        android:id= "@+id/qrCode"/>
 
 
     <item
