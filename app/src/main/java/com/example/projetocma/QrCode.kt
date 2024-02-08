@@ -137,7 +137,7 @@ class QrCode : Fragment() {
                                 val bundle = Bundle()
                                 bundle.putString("museuId", qrCodeModel.museuId)
                                 bundle.putString("obraId", qrCodeModel.obraId)
-                                findNavController().navigate(R.id.obrasExplore, bundle)
+                                findNavController().navigate(R.id.obrasDetail, bundle)
                             val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
                             navBar.menu.findItem(R.id.home).isChecked = true
                         }
