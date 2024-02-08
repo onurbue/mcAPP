@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/bilheteira_basic"
-        android:fontFamily="@font/outfitsemibold"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="48dp"
+        android:fontFamily="@font/outfitsemibold"
         android:text="Informações do Bilhete"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,8 +45,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView11"
         app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.559">
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="0.043">
 
     </TextView>
 
@@ -132,11 +132,10 @@
         android:text="Válido na data de"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/ticketdescription"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="@+id/ticketdescription"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ticketdescription"
+        app:layout_constraintVertical_bias="0.096">
 
     </TextView>
 
@@ -159,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfitregular"
-        android:text="Aproveite sua visita ao Museu de Arte Contemporânea. Por favor, apresente este bilhete na entrada."
+        android:text="Aproveite sua visita ao Museu. Por favor, apresente este bilhete na entrada."
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
