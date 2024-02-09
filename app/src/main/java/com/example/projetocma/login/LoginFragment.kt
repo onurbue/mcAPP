@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.projetocma.NavBar
 import com.example.projetocma.R
 import com.example.projetocma.databinding.FragmentLoginBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -22,7 +23,6 @@ import models.Utility
 class LoginFragment : Fragment() {
     private  var _binding: FragmentLoginBinding? = null
     private lateinit var auth: FirebaseAuth
-
     private val binding get() = _binding!!
 
     override fun onDestroyView() {
@@ -34,6 +34,11 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val navBar =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        navBar.visibility = View.GONE
+
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         auth = Firebase.auth
